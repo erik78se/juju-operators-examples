@@ -5,7 +5,7 @@ name: storage
 display-name: |
   The storage charm.
 description: |
-  Charm to show a basic pattern to deal with juju storage.
+  Charm to show a basic pattern to deal with juju storage of type filesystem.
 summary: |
   It implements the storage and install hooks.
 
