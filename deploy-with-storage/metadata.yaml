@@ -1,0 +1,10 @@
+# Copyright 2021 Erik Lönroth
+# See LICENSE file for licensing details.
+
+name: deploy-minimal
+display-name: |
+  Deploy minimal charm
+description: |
+  A charm that only follow the deployment path of juju.
+summary: |
+  It implements only hooks involved in deploying a juju machine charm.
