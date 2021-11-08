@@ -3,10 +3,10 @@
 
 # For a complete list of supported options, see:
 # https://discourse.charmhub.io/t/charm-metadata-v2/3674/15
-name: mymetric
+name: metrics-nrpe
 display-name: |
-  metrics
+  The metrics-nrpe charm
 description: |
-  This charm demonstrates the use of metrics in a juju charm.
+  This charm demonstrates clever use of metrics together with nagios nrpe in a juju charm.
 summary: |
-  It loads some metrics on cpu and memory.
+  It loads metrics on cpu, memory & provides them on the nagios-external-nrpe interface.

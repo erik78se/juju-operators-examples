@@ -4,8 +4,8 @@
 #
 # Learn more at: https://juju.is/docs/sdk
 
-# storage-attach
-# storage-detaching
+# storage-filesystem-attach
+# storage-filesystem-detaching
 
 # RECOMMENDED: set debugging on the model to see more output:
 # juju model-config logging-config="<root>=WARNING;unit=TRACE"
@@ -42,7 +42,7 @@ class StorageCharm(CharmBase):
     def _storage_attached(self, event):
         """
         Executes before install for new units.
-        Install and enable the systemd mount file for the attached storage.
+        Install and enable the systemd mount file for the attached storage-filesystem.
         """
         shutil.copyfile('templates/etc/systemd/system/var-log-mylogs.mount',
                         '/etc/systemd/system/var-log-mylogs.mount')
@@ -51,13 +51,13 @@ class StorageCharm(CharmBase):
 
     def _install(self, event):
         """
-        Query the unit for enabled storage. ---> How?
+        Query the unit for enabled storage-filesystem. ---> How?
         """
         pass
 
     def _storage_detaching(self, event):
         """
-        Disable the storage and remove the unit file.
+        Disable the storage-filesystem and remove the unit file.
         """
         sp.check_call(['systemctl', 'disable', 'var-log-mylogs.mount'])
         os.remove('/etc/systemd/system/var-log-mylogs.mount')

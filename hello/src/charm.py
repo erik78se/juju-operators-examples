@@ -71,7 +71,7 @@ class HelloCharm(CharmBase):
 
         In this charm, we install a package and a service unit file which will use hello.
 
-        This hook is ran after the storage-attached hook - only once in the entire lifetime of the unit.
+        This hook is ran after the storage-filesystem-attached hook - only once in the entire lifetime of the unit.
         """
         logger.debug(EMOJI_CORE_HOOK_EVENT + sys._getframe().f_code.co_name)
 

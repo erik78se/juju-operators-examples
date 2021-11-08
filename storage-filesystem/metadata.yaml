@@ -1,7 +1,7 @@
 # Copyright 2021 Erik Lönroth
 # See LICENSE file for licensing details.
 
-name: storage
+name: storage-filesystem
 display-name: |
   The storage charm.
 description: |

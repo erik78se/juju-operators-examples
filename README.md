@@ -7,21 +7,22 @@ To see more logs from the charms, do:
 
 ## The charms 
 
-
-### hello
+### Basic concepts
+#### hello
 Implements core juju hooks to deploy the **hello** package via apt. 
 systemd is used with a /etc/default/hello config file to manage service startup parameters.
 
-### metrics
+#### metrics-base
 Implements some metrics.
 
-### mertrics-nrpe
+#### mertrics-nrpe
 Implements a custom metric and provides it via nrpe-external-master interface. 
 This allows you to then relate to nagios to monitor your service.
 
-### storage
+#### storage-filesystem
 Uses a separate disk (type: filesystem) for storing log files. 
 Useful for charms which needs to have permanent or re-usable data on separate disk.
+
 
 
 ## Contribute

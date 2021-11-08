@@ -4,12 +4,8 @@
 #
 # Learn more at: https://juju.is/docs/sdk
 
-"""Charm the service.
+"""Charm example code
 
-Refer to the following post for a quick-start guide that will help you
-develop a new k8s charm using the Operator Framework:
-
-    https://discourse.charmhub.io/t/4208
 """
 
 import logging
@@ -27,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 EMOJI_CORE_HOOK_EVENT = "\U0001F4CC"
 
-class MetricsCharm(CharmBase):
+class MetricsNrpeCharm(CharmBase):
     """Charm the service."""
 
     _stored = StoredState()
@@ -52,8 +48,9 @@ class MetricsCharm(CharmBase):
         load_5 = psutil.getloadavg()[1]
         mem_used = psutil.virtual_memory().percent
 
-        load_5 = 99
-        mem_used = 88
+        #BUG: value overload - fixed in later version of ops. Convert to int to get a workaround.
+        load_5 = int(load_5)
+        mem_used = int(mem_used)
 
         logger.info(f"\U0001F4CC Memory % used: {mem_used}")
         logger.info(f"\U0001F4CC Load 5min: {load_5}")
@@ -61,4 +58,4 @@ class MetricsCharm(CharmBase):
         event.add_metrics({"mem_used": mem_used, "load_5": load_5})
 
 if __name__ == "__main__":
-    main(MetricsCharm)
+    main(MetricsNrpeCharm)
