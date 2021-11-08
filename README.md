@@ -1,5 +1,5 @@
-# juju-operators-examples
-Juju example charms demonstrating and describing functionalities of Juju operators
+# Juju operators examples
+Example charms demonstrating and describing functionalities of Juju operators.
 
 Remember to do to be able to see more logs from the charms:
 
@@ -14,3 +14,5 @@ Work in progress here...
 * The storage charm
   * A charm uses a separate disk for storing log files. This shows how you can develop charms which needs to have permanent data on separate disk.
 * .... more
+
+Please contribute by trying them out and give feedback and code!
