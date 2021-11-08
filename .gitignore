@@ -1,0 +1,6 @@
+.idea
+*/build
+*.charm
+*/.tox
+*__pycache__/
+*/version
