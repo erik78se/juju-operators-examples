@@ -9,6 +9,8 @@ This charm demonstrates how to work with juju storage filesystem type disk as de
         description: Storage device for logs.
         minimum-size: 100M
         location: /logs
+        multiple: 
+          range: 0-1
 
 ## Description
 
