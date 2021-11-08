@@ -1,4 +1,4 @@
-# storage
+# storage-filesystem
 
 This charm demonstrates how to work with juju storage filesystem type disk as defined in metadata.yaml.
 
