@@ -1,11 +1,12 @@
 # hello
 
-A juju charm that implements all core hooks of Juju.
+A hello world kind of juju charm.
 
+It implements all core hooks of Juju allowing a charmer to get started with operator and juju.
 
-## Description
+The charm installs the service *hello* and the operator can set a custom message for the hello service.
 
-A simple machine/vm charm implementing all of the core hooks.
+The core hooks implemented are:
 
     install
     config-changed
@@ -17,8 +18,6 @@ A simple machine/vm charm implementing all of the core hooks.
     leader-settings-changed
     update-status
     collect-metrics
-
-The charm installs the service *hello* and allows the operator to set a custom message.
 
 ## Usage
     
