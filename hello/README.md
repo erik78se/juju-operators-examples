@@ -1,8 +1,7 @@
-# core
+# hello
 
-Charm that implements all core hooks of Juju.
+A juju charm that implements all core hooks of Juju.
 
-    juju model-config logging-config="<root>=WARNING;unit=TRACE"
 
 ## Description
 
@@ -18,13 +17,25 @@ A simple machine/vm charm implementing all of the core hooks.
     leader-settings-changed
     update-status
     collect-metrics
-    
-It does not implement relation, storage, series, pebble or actions hooks.
+
+The charm installs the service *hello* and allows the operator to set a custom message.
 
 ## Usage
     
     charmcraft build
-    juju deploy ./mysimple
+    juju add-model hellomodel
+    juju model-config logging-config="<root>=WARNING;unit=TRACE"
+    juju deploy ./<built_charm>
+
+## Configs
+
+Set a custom message for the juju service.
+
+    juju config hello message="Say hello to Juju."
+
+Set this config to make juju automatically restart the hello service if the message is changed.
+
+    juju config hello restart_on_reconfig=True
 
 
 ## Authors
