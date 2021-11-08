@@ -1,0 +1,13 @@
+[Unit]
+Description=hello with custom arguments.
+After=network.target
+Documentation=https://github.com/erik78se/juju-operators-examples/
+
+[Service]
+ExecStart=/usr/bin/hello -g $CUSTOM_ARGS
+RemainAfterExit=true
+Type=oneshot
+EnvironmentFile=-/etc/default/hello
+
+[Install]
+WantedBy=multi-user.target

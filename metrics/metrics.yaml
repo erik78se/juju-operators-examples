@@ -1,0 +1,7 @@
+metrics:
+    load_5:
+        type: gauge
+        description: System load last 5 minutes.
+    mem_used:
+        type: gauge
+        description: Used RAM in percent.

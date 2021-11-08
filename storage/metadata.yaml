@@ -1,0 +1,17 @@
+# Copyright 2021 Erik Lönroth
+# See LICENSE file for licensing details.
+
+name: storage
+display-name: |
+  The storage charm.
+description: |
+  Charm to show a basic pattern to deal with juju storage.
+summary: |
+  It implements the storage and install hooks.
+
+storage:
+  data:
+    type: filesystem
+    description: Storage device for logs.
+    minimum-size: 100M
+    location: /logs

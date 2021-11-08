@@ -1,0 +1,12 @@
+# Copyright 2021 Erik Lönroth
+# See LICENSE file for licensing details.
+
+# For a complete list of supported options, see:
+# https://discourse.charmhub.io/t/charm-metadata-v2/3674/15
+name: mymetric
+display-name: |
+  metrics
+description: |
+  This charm demonstrates the use of metrics in a juju charm.
+summary: |
+  It loads some metrics on cpu and memory.

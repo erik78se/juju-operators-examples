@@ -1,0 +1,12 @@
+[Unit]
+Description=Logs for the storage charm. Bindmount to make it easy to change path.
+After=network.target
+
+[Mount]
+What=/logs
+Where=/var/log/mylogs
+Type=bind
+Options=default
+
+[Install]
+WantedBy=multi-user.target

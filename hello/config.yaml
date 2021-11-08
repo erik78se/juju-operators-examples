@@ -1,0 +1,15 @@
+# Copyright 2021 Erik Lönroth
+# See LICENSE file for licensing details.
+
+# Learn more about config at: https://juju.is/docs/sdk/config
+# If you update a config element here, the hello hook "config-changed" is triggered.
+
+options:
+  message:
+    default: "Hello Juju World"
+    description: This is a message used by the hello service custom args.
+    type: string
+  restart_on_reconfig:
+    default: False
+    description: Automatically restart the hello service if config message is changed.
+    type: boolean

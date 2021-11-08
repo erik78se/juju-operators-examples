@@ -1,0 +1,12 @@
+# Copyright 2021 Erik Lönroth
+# See LICENSE file for licensing details.
+
+# For a complete list of supported options, see:
+# https://discourse.charmhub.io/t/charm-metadata-v2/3674/15
+name: hello
+display-name: |
+  The simple charm
+description: |
+  This is a simple charm to get started with developing juju charms.
+summary: |
+  It implements all the core hooks of Juju.
