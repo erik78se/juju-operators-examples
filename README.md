@@ -13,11 +13,12 @@ Implements core juju hooks to deploy the **hello** package via apt.
 systemd is used with a /etc/default/hello config file to manage service startup parameters.
 
 #### metrics-base
-Implements some metrics.
+This charm demonstrates use of metrics in juju charms.
+It loads some metrics on cpu and memory.
 
 #### mertrics-nrpe
-Implements a custom metric and provides it via nrpe-external-master interface. 
-This allows you to then relate to nagios to monitor your service.
+This charm demonstrates clever use of metrics together with nagios nrpe.
+It loads metrics on cpu, memory & provides them on the nagios-external-nrpe interface.
 
 #### storage-filesystem
 Uses a separate disk (type: filesystem) for storing log files. 
