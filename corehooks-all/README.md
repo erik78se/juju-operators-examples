@@ -1,10 +1,8 @@
-# hello
+# corehooks-all
 
-A hello world kind of juju charm.
+It implements all core hooks of Juju - a great start for a developer getting started with operator and juju.
 
-It implements all core hooks of Juju allowing a charmer to get started with operator and juju.
-
-The charm installs the service *hello* and the operator can set a custom message for the hello service.
+Installs the service *hello* and the operator can set a custom message for the hello service.
 
 The core hooks implemented are:
 
@@ -32,11 +30,11 @@ The core hooks implemented are:
 
 Set a custom message for the juju service.
 
-    juju config hello message="Say hello to Juju."
+    juju config corehooks-all message="Say hello to Juju."
 
 Set this config to make juju automatically restart the hello service if the message is changed.
 
-    juju config hello restart_on_reconfig=True
+    juju config corehooks-all restart_on_reconfig=True
 
 
 ## Authors

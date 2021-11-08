@@ -4,7 +4,7 @@
 #
 # Learn more at: https://juju.is/docs/sdk
 
-# The hello charm implements all juju core hooks.
+# The corehooks-all implements all juju core hooks, deploying the hello package wrapped as a service.
 
 # install
 # config-changed
@@ -17,8 +17,6 @@
 # update-status
 # collect-metrics
 
-# RECOMMENDED: set debugging on the model to see more output:
-# juju model-config logging-config="<root>=WARNING;unit=DEBUG"
 
 import logging
 import os
@@ -40,8 +38,8 @@ EMOJI_RED_DOT = "\U0001F534"
 EMOJI_PACKAGE = "\U0001F4E6"
 
 
-class HelloCharm(CharmBase):
-    """Charm the service."""
+class CorehooksAllCharm(CharmBase):
+    """Charm the hello service with all core hooks."""
 
     _stored = StoredState()
 
@@ -194,4 +192,4 @@ class HelloCharm(CharmBase):
             os.system('systemctl restart hello.service')
 
 if __name__ == "__main__":
-    main(HelloCharm)
+    main(CorehooksAllCharm)
