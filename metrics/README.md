@@ -1,27 +1,20 @@
-# mymetrics
+# metrics
 A simple charm showing metrics use.
 
 ## Description
 
-Metrics charm.
+The shows how to make a charm collect metrics by adding the **metrics.yaml** file to a charm and implementing the juju core hook:
 
-## Key elements
-### metrics.yaml
-Defines the metrics.
-
-### charm.py
-
-    self.framework.observe(self.on.collect_metrics, self.on_collect_metrics)
+    collect-metrics
 
 ## Usage
 
-Shows simple metrics code.
-
-## Contributing
-
-Please see the [Juju SDK docs](https://juju.is/docs/sdk) for guidelines
-on enhancements to this charm following best practice guidelines, and
-`CONTRIBUTING.md` for developer guidance.
+    charmcraft build
+    juju add-model examples
+    juju model-config logging-config="<root>=WARNING;unit=TRACE"
+    juju deploy ./<built_charm>
+    juju debug-log
+    juju collect-metrics metrics
 
 ## Authors
 Erik Lönroth, support me by attributing my work

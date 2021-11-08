@@ -22,7 +22,7 @@ The core hooks implemented are:
 ## Usage
     
     charmcraft build
-    juju add-model hellomodel
+    juju add-model examples
     juju model-config logging-config="<root>=WARNING;unit=TRACE"
     juju deploy ./<built_charm>
     juju debug-log
