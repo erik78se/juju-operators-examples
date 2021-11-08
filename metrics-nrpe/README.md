@@ -1,5 +1,7 @@
-# metrics
+# metrics-nrpe
 A simple charm showing metrics use.
+
+TODO: This charm is not working yet.
 
 ## Description
 
