@@ -1,0 +1,2 @@
+# No config for storage-filesystem charm but must have the options defined.
+options: {}

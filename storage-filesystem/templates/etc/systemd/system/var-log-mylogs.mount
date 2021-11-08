@@ -1,12 +1,14 @@
 [Unit]
-Description=Logs for the storage charm. Bindmount to make it easy to change path.
+Description=Logs for the storage charm (bindmount)
 After=network.target
 
 [Mount]
+# Using bind-mount, allows a charmer to simply modifies this file to reflect what
+# the new storage location should be available to the service. The charm metadata.yaml doesnt need to change.
 What=/logs
 Where=/var/log/mylogs
 Type=bind
-Options=default
+Options=bind
 
 [Install]
 WantedBy=multi-user.target

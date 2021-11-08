@@ -10,8 +10,12 @@ summary: |
   It implements the storage and install hooks.
 
 storage:
-  data:
+  logdata:
     type: filesystem
     description: Storage device for logs.
     minimum-size: 100M
     location: /logs
+    # If multiple is omitted this will deploy the storage to the root disk. Triggering the storage hooks.
+    # If a range = constant > 0, will that be enforced during deploy?
+    multiple:
+      range: 0-1

@@ -18,7 +18,7 @@
 # collect-metrics
 
 # RECOMMENDED: set debugging on the model to see more output:
-# juju model-config logging-config="<root>=WARNING;unit=TRACE"
+# juju model-config logging-config="<root>=WARNING;unit=DEBUG"
 
 import logging
 import os

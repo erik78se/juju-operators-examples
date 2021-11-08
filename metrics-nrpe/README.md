@@ -9,6 +9,7 @@ Collects some metrics and expose the same via the nrpe-external-master interface
 
     charmcraft build
     juju add-model examples
+    juju model-config default-series=focal
     juju model-config logging-config="<root>=WARNING;unit=TRACE"
     juju deploy ./<built_charm>
     juju deploy nagios

@@ -4,9 +4,6 @@
 #
 # Learn more at: https://juju.is/docs/sdk
 
-"""Charm example code
-
-"""
 
 import logging
 
@@ -30,9 +27,9 @@ class MetricsNrpeCharm(CharmBase):
 
     def __init__(self, *args):
         super().__init__(*args)
-        self.framework.observe(self.on.collect_metrics, self.on_collect_metrics)
+        self.framework.observe(self.on.collect_metrics, self._on_collect_metrics)
 
-    def on_collect_metrics(self, event):
+    def _on_collect_metrics(self, event):
         """
         Runs every: X minutes. Not sure how often really. Can the interval be changed?
         The collect-metrics hook is manually triggered with: juju collect-metrics <charmname> is seems.

@@ -3,7 +3,7 @@ Example charms demonstrating and describing functionalities of Juju operators.
 
 To see more logs from the charms, do:
 
-    juju model-config logging-config="<root>=WARNING;unit=TRACE"
+    juju model-config logging-config="<root>=WARNING;unit=DEBUG"
 
 ## The charms 
 
