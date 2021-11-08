@@ -7,7 +7,6 @@ To see more logs from the charms, do:
 
 ## The charms 
 
-### Basic concepts
 #### hello
 Implements core juju hooks to deploy the **hello** package via apt. 
 systemd is used with a /etc/default/hello config file to manage service startup parameters.
