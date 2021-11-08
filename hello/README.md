@@ -25,6 +25,7 @@ The core hooks implemented are:
     juju add-model hellomodel
     juju model-config logging-config="<root>=WARNING;unit=TRACE"
     juju deploy ./<built_charm>
+    juju debug-log
 
 ## Configs
 
