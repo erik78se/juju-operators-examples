@@ -1,10 +1,17 @@
 # Copyright 2021 Erik Lönroth
 # See LICENSE file for licensing details.
 
-name: deploy-minimal
+name: deploy-with-storage
 display-name: |
-  Deploy minimal charm
+  Deploy minimal charm with storage
 description: |
-  A charm that only follow the deployment path of juju.
+  A charm that only follow the deployment path of juju plus storage_attached.
 summary: |
-  It implements only hooks involved in deploying a juju machine charm.
+  It implements only hooks involved in deploying a juju machine charm plus storage_attached.
+
+storage:
+  foobar:
+    type: filesystem
+    description: Storage for the charm.
+    minimum-size: 100M
+    location: /foobar

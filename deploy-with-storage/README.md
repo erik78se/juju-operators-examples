@@ -1,5 +1,5 @@
 # deploy-minimal
-Minimal charm implementing only the deploy hooks.
+Minimal charm implementing only the deploy hooks + storage_attach hook.
 
 ## Usage
     
