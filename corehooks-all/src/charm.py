@@ -163,7 +163,7 @@ class CorehooksAllCharm(CharmBase):
         logger.debug(EMOJI_CORE_HOOK_EVENT + sys._getframe().f_code.co_name)
 
         logger.info(f"Removing hello {EMOJI_PACKAGE}")
-        os.system('sudo apt -y remove --purge hello')
+        os.system('apt -y remove --purge hello')
 
 
     def _on_collect_metrics(self, event):
