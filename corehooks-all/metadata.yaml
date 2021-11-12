@@ -3,10 +3,10 @@
 
 # For a complete list of supported options, see:
 # https://discourse.charmhub.io/t/charm-metadata-v2/3674/15
-name: hello
+name: corehooks-all
 display-name: |
-  The simple charm
+  A ops charm implementing all core hooks
 description: |
-  This is a simple charm to get started with developing juju charms.
+  Get started with developing juju charms using this a template.
 summary: |
   It implements all the core hooks of Juju.
