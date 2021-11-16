@@ -1,6 +1,9 @@
 # lxd-profile
 
-Deployes a charm, using a lxd profile (lxd-profile.yaml) to tweak lxd settings for a charm.
+This demonstrate the use of a charm in with a *[lxd-profile.yaml](lxd-profile.yaml)* to tweak lxd settings for a charm. 
+The example deploys a privileged container setting.
+
+There are some example yaml files below you can use for you own needs.
 
 Read more in the [Juju official docs]
 
