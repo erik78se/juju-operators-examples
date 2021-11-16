@@ -1,0 +1,6 @@
+config:
+  raw.lxc: |
+      lxc.apparmor.profile=unconfined
+      lxc.mount.auto=proc:rw sys:rw
+  security.nesting: true
+  security.privileged: true
