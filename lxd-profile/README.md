@@ -15,7 +15,7 @@ Juju uses the default "juju-default" profile for container defaults.
 
     lxc profile show juju-default
 
-You can change this, for example changing the default storage zfs pool:
+You can edit a profile, for example changing the default storage zfs pool:
 
     lxc profile device set juju-default root pool=lxd-zfs
 
