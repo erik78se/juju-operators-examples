@@ -1,7 +1,11 @@
 # Juju ops examples
 Example charms demonstrating and describing functionalities of Juju charms with the juju ops framework.
 
-To see more logs from the charms, do:
+[Ops](https://ops.readthedocs.io/en/latest/) is a Python framework for developing charms. It uses standard Python structures to make charm development simple.
+
+[Charmcraft](https://github.com/canonical/charmcraft) is a command line tool used alongside Ops to simplify the creation, building, and publication of a charm.
+
+When testing the charms, see more logs with:
 
     juju model-config logging-config="<root>=WARNING;unit=DEBUG"
 
