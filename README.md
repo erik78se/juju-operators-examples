@@ -22,6 +22,11 @@ Implements the core hooks relevant to a deploy of a charm: *install*, *config-ch
 Implements the core hooks relevant to a deploy of a charm: *install*, *config-changed*, *start* 
 including the storage hooks: *xxx_storage_attached* and *xxx_storage_detaching*
 
+#### lxd-profile
+
+This demonstrates the use of a *lxd-profile.yaml* to tweak lxd container settings. 
+The example deploys privileged containers.
+
 #### metrics-base
 This charm demonstrates use of metrics in juju charms.
 It loads some metrics on cpu and memory.
