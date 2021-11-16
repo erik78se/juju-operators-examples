@@ -1,7 +1,7 @@
 # lxd-profile
 
-This demonstrate the use of a charm in with a *[lxd-profile.yaml](lxd-profile.yaml)* to tweak lxd settings for a charm. 
-The example deploys a privileged container setting.
+This demonstrates the use of a *[lxd-profile.yaml](lxd-profile.yaml)* to tweak lxd container settings. 
+The example deploys privileged containers.
 
 There are some example yaml files below you can use for you own needs.
 
