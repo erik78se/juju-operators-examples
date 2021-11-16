@@ -1,5 +1,5 @@
 # Ops examples
-This repo collects example charms built with the juju ops framework. Contribution with your own examples is appreciated!
+This repo collects example charms built with the juju ops framework. Contributions with your examples is much appreciated!
 
 [Ops](https://ops.readthedocs.io/en/latest/) is a Python framework for developing charms. It uses standard Python structures to make charm development simple.
 
