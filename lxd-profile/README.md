@@ -7,8 +7,15 @@ There are some example yaml files below you can use for you own needs.
 
 Read more in the [Juju official docs]
 
-* Profiles are upgraded during the upgrade of the charm (juju upgrade-charm).
-* Profiles are displayed at the machine level by using either the show-machine command or the status --format=yaml command.
+## Limitations & behaviour
+* You can only have one lxd-profile per charm.
+* The lxd profile is upgraded during the upgrade of the charm (juju upgrade-charm).
+* Profiles are displayed at the machine level by using either the ```juju show-machine``` command 
+or the ```juju status --format=yaml``` command.
+* There is a hierarchy of profiles. LXD has its own default profile, then the model default profile (juju-<model-name>), and then a charm profile.
+Interestingly, you can insert a model profile juju-<model-name> before you add the model, and juju won’t try and override it.
+* You can't use "--constraints" to control the behaviour of lxd profiles.
+* Profiles are applied in the order they are specified so the last profile to specify a specific key wins.
 
 ## Juju LXD information
 Juju uses the default "juju-default" profile for container defaults.
