@@ -95,6 +95,46 @@ Note that these profiles are not well tested. Help needed!
       mygpu:
         type: gpu
 
+### GPGPU example for CUDA
+	config:
+   	  boot.autostart: "true"
+   	  security.nesting: "true"
+   	  nvidia.driver.capabilities: all
+   	  nvidia.runtime: "true"
+   	  user.user-data: |
+	    #cloud-config
+     	package_upgrade: true
+        packages:
+          - mesa-utils
+          - build-essential
+          - nvidia-cuda-toolkit-gcc
+          - vim
+	  description: GPGPU profile
+ 	  devices:
+   		mygpu:
+     	  type: gpu
+   		eth0:
+     	  name: eth0
+     	  network: lxdfan0
+     	  type: nic
+   	  	root:
+     	  path: /
+     	  pool: local
+     	  type: disk
+ 	name: gpgpu
+ 	used_by: []
+
+One way to use GPGPU example is to launch the lxc profile like this:
+
+## lxc launch ubuntu:20.04 --profile juju-default --profile gpgpu gpupartition
+
+One can add this running lxc image to a juju charm model's machines, like this:
+
+## juju add-machine ssh:ubuntu@IP.OF.THE.CONTAINER
+
+From then bob's your uncle. 
+
+
 ## Usage
     
     charmcraft build
