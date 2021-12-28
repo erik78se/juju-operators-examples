@@ -49,7 +49,19 @@ class StorageFilesystemCharm(CharmBase):
 
         # Start the storage unit here, or in some other hook.
         os.system('systemctl enable var-log-mylogs.mount --now')
-        self.unit.status = ActiveStatus(f"{EMOJI_CHECK_MARK_BUTTON} Started /var/log/mylogs bind mount.")
+
+
+        # The event carries information of the storage for the unit.        
+        storage_location = event.storage.location
+        storage_name = event.storage.name
+        storage_id = event.storage.id
+
+        # The model has storages you can access like this.
+        model_storages = self.model.storages
+
+        logger.debug(f"{event.storage.location} {event.storage.name} {event.storage.id}")
+        
+        self.unit.status = ActiveStatus(f"{EMOJI_CHECK_MARK_BUTTON} Attached {storage_name}/{storage_id} at {storage_location} bind mount.")
 
     def _on_install(self, event):
         """
@@ -67,7 +79,7 @@ class StorageFilesystemCharm(CharmBase):
         logger.debug(EMOJI_COMPUTER_DISK + sys._getframe().f_code.co_name)
         os.system('systemctl disable var-log-mylogs.mount --now')
         os.remove('/etc/systemd/system/var-log-mylogs.mount')
-        self.unit.status = ActiveStatus(f"{EMOJI_CROSS_MARK_BUTTON} Disabled /var/log/mylogs bind mount.")
+        self.unit.status = ActiveStatus(f"{EMOJI_CROSS_MARK_BUTTON} Detached storage.")
 
 
 if __name__ == "__main__":
