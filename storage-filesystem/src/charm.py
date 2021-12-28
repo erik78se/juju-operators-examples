@@ -11,7 +11,7 @@
 import logging
 import os
 import shutil
-
+import functools
 from ops.charm import CharmBase
 from ops.main import main
 from ops.model import ActiveStatus
@@ -24,6 +24,21 @@ EMOJI_CHECK_MARK_BUTTON = "\U00002705"
 EMOJI_CROSS_MARK_BUTTON = "\U0000274E"
 EMOJI_COMPUTER_DISK = "\U0001F4BD"
 
+def logdecorate(prefix):
+    """
+    Adds output with a prefix string to any function.
+    
+    """
+    def decorate(f):
+        @functools.wraps(f)
+        def wrapper(*args, **kwargs):
+            logger.debug(f"{prefix} {f.__name__} Args: {args} Kwargs: {kwargs}")
+            cr = f(*args, **kwargs)
+            logger.debug(f"{prefix} {f.__name__} Result: {cr}")
+            return cr
+        return wrapper
+    return decorate
+
 
 class StorageFilesystemCharm(CharmBase):
 
@@ -33,6 +48,8 @@ class StorageFilesystemCharm(CharmBase):
         self.framework.observe(self.on.install, self._on_install)
         self.framework.observe(self.on.logdata_storage_detaching, self._logdata_storage_detaching)
 
+
+    @logdecorate(EMOJI_COMPUTER_DISK)
     def _logdata_storage_attached(self, event):
         """
         Executes before install for new units.
@@ -41,7 +58,6 @@ class StorageFilesystemCharm(CharmBase):
 
         Install and enable the systemd mount file for the attached storage-filesystem.
         """
-        logger.debug(EMOJI_COMPUTER_DISK + sys._getframe().f_code.co_name)
 
         shutil.copyfile('templates/etc/systemd/system/var-log-mylogs.mount',
                         '/etc/systemd/system/var-log-mylogs.mount')
@@ -63,24 +79,23 @@ class StorageFilesystemCharm(CharmBase):
         
         self.unit.status = ActiveStatus(f"{EMOJI_CHECK_MARK_BUTTON} Attached {storage_name}/{storage_id} at {storage_location} bind mount.")
 
+    @logdecorate(EMOJI_CORE_HOOK_EVENT)
     def _on_install(self, event):
         """
         TODO: Render dynamically a unit-file based on the location name?
         1. Query the unit for enabled storage-filesystem.
         """
-        logger.debug(EMOJI_CORE_HOOK_EVENT + sys._getframe().f_code.co_name)
         self.unit.status = ActiveStatus(f"Ready (installed)")
 
-
+    @logdecorate(EMOJI_COMPUTER_DISK)
     def _logdata_storage_detaching(self, event):
         """
         Disable the storage-filesystem and remove the unit file.
         """
-        logger.debug(EMOJI_COMPUTER_DISK + sys._getframe().f_code.co_name)
         os.system('systemctl disable var-log-mylogs.mount --now')
         os.remove('/etc/systemd/system/var-log-mylogs.mount')
         self.unit.status = ActiveStatus(f"{EMOJI_CROSS_MARK_BUTTON} Detached storage.")
 
-
+        
 if __name__ == "__main__":
     main(StorageFilesystemCharm)
