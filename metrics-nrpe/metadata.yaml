@@ -10,3 +10,8 @@ description: |
   This charm demonstrates clever use of metrics together with nagios nrpe.
 summary: |
   It loads metrics on cpu, memory & provides them on the nagios-external-nrpe interface.
+
+provides:
+  nrpe-external-master:
+    interface: nrpe-external-master
+    scope: container
