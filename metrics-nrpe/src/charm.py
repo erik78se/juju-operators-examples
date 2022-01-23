@@ -6,7 +6,7 @@
 
 
 import logging
-
+import os
 from ops.charm import CharmBase
 from ops.framework import StoredState
 from ops.main import main
@@ -27,15 +27,16 @@ NAGIOS_PLUGINS_DIR = "/usr/local/lib/nagios/plugins/"
 
 class MetricsNrpeCharm(CharmBase):
     """Charm the service."""
-
-    _stored = StoredState()
-    self.state.set_default(nrpe_installed=False)
-
+    
     def __init__(self, *args):
         super().__init__(*args)
-        self.framework.observe(self.on.collect_metrics, self._on_collect_metrics)
-        self.framework.observe(self.on.nrpe_relation_joined, self._on_nrpe_relation_joined)
-        
+
+        self.framework.observe(self.on.collect_metrics,
+                               self._on_collect_metrics)
+        self.framework.observe(self.on.nrpe_external_master_relation_changed,
+                               self._on_nrpe_external_master_relation_changed)
+
+    
     def _on_collect_metrics(self, event):
         """
         Runs every: X minutes. Not sure how often really. Can the interval be changed?
@@ -61,10 +62,10 @@ class MetricsNrpeCharm(CharmBase):
 
         event.add_metrics({"mem_used": mem_used, "load_5": load_5})
 
-    def _on_nrpe_relation_joined(self, event):
-        def on_nrpe_external_master_relation_joined(self, event):
-        """Handle nrpe-external-master relation joined."""
 
+    def _on_nrpe_external_master_relation_changed(self, event):
+        """Handle nrpe-external-master relation joined."""
+        
         # Get plugins in place.
         self.update_plugins()
 
@@ -88,8 +89,8 @@ class MetricsNrpeCharm(CharmBase):
 
     def update_plugins(self):
         """Rsync plugins to the plugin directory."""
-        charm_plugin_dir = os.path.join(hookenv.charm_dir(), "files", "plugins")
-        host.rsync(charm_plugin_dir, self.plugins_dir, options=["--executability"])
+        checkscript = os.path.join(hookenv.charm_dir(), "files", "nrpe-external-master/check_hello.sh")
+        host.rsync(checkscript, NAGIOS_PLUGINS_DIR, options=["--executability"])
 
     def render_checks(self):
         """Render nrpe checks."""
@@ -106,8 +107,6 @@ class MetricsNrpeCharm(CharmBase):
         )
         nrpe.write()
         
-        
-
     
 if __name__ == "__main__":
     main(MetricsNrpeCharm)
