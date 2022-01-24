@@ -11,7 +11,6 @@ Uses charmhelpers lib to work out the nrpe bits. See: https://github.com/juju/ch
     juju model-config logging-config="<root>=WARNING;unit=TRACE"
 
     juju deploy nagios
-    juju deploy ubuntu
     juju deploy nrpe
     juju deploy ./monitoring-nrpe.charm
     juju relate nagios:monitors nrpe:monitors
