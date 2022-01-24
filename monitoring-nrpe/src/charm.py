@@ -25,12 +25,10 @@ class NrpeCharm(CharmBase):
     def __init__(self, *args):
         super().__init__(*args)
 
-        self.framework.observe(self.on.nrpe_external_master_relation_joined,
-                               self._on_nrpe_external_master_relation_joinedchanged)
-        self.framework.observe(self.on.nrpe_external_master_relation_changed,
-                               self._on_nrpe_external_master_relation_joinedchanged)
-    
-    def _on_nrpe_external_master_relation_joinedchanged(self, event):
+        self.framework.observe(self.on.nrpe_external_master_relation_created,
+                               self._on_nrpe_external_master_relation_created)
+
+    def _on_nrpe_external_master_relation_created(self, event):
         """Handle nrpe-external-master relation joined."""
         
         # Get plugins in place.
