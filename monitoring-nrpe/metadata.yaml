@@ -3,13 +3,13 @@
 
 # For a complete list of supported options, see:
 # https://discourse.charmhub.io/t/charm-metadata-v2/3674/15
-name: metrics-nrpe
+name: monitoring-nrpe
 display-name: |
-  The metrics-nrpe charm
+  The monitoring-nrpe charm
 description: |
-  This charm demonstrates clever use of metrics together with nagios nrpe.
+  This charm demonstrates use of with nagios nrpe.
 summary: |
-  It loads metrics on cpu, memory & provides them on the nagios-external-nrpe interface.
+  It provides a dummy monitor using nagios-external-nrpe interface.
 
 provides:
   nrpe-external-master:
