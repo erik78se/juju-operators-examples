@@ -31,9 +31,9 @@ The example deploys privileged containers.
 This charm demonstrates use of metrics in juju charms.
 It loads some metrics on cpu and memory.
 
-#### [metrics-nrpe](metrics-nrpe)
-This charm demonstrates clever use of metrics together with nagios nrpe.
-It loads metrics on cpu, memory & provides them on the nagios-external-nrpe interface.
+#### [monitoring-nrpe](monitoring-nrpe)
+This charm demonstrates use nagios nrpe (and charmhelpers).
+It uses the the nagios-external-nrpe interface.
 
 #### [storage-filesystem](storage-filesystem)
 Uses a separate disk (type: filesystem) for storing log files. 

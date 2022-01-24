@@ -79,8 +79,10 @@ Uses charmhelpers lib to work out the nrpe bits. See: https://github.com/juju/ch
           - files/*
 
 6. Add to requirements.txt
+
        ops >= 1.3.0
        charmhelpers==0.20.24
+
 ## Authors
 Erik Lönroth, support me by attributing my work
 https://eriklonroth.com
