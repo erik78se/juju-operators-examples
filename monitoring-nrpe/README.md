@@ -1,5 +1,5 @@
 # monitoring-nrpe
-A simple charm that shows how to implement some monitoring with charmhelpers and nrpe-external-master interface to use with nagios.
+A simple charm that shows how to implement some monitoring with charmhelpers and nrpe to use with nagios.
 
 Uses charmhelpers lib to work out the nrpe bits. See: https://github.com/juju/charm-helpers
 
@@ -14,7 +14,7 @@ Uses charmhelpers lib to work out the nrpe bits. See: https://github.com/juju/ch
     juju deploy nrpe
     juju deploy ./monitoring-nrpe.charm
     juju relate nagios:monitors nrpe:monitors
-    juju relate monitoring-nrpe:nrpe-external-master nrpe:nrpe-external-master
+    juju relate monitoring-nrpe:local-monitors nrpe
 
     # Visit nagios http://nagios
     # Get nagiosadmin password:
@@ -24,8 +24,8 @@ Uses charmhelpers lib to work out the nrpe bits. See: https://github.com/juju/ch
 1. Update metadata.yaml
 
        provides:
-         nrpe-external-master:
-         interface: nrpe-external-master
+         local-monitors:
+         interface: local-monitors
          scope: container
 
 
@@ -48,9 +48,9 @@ Uses charmhelpers lib to work out the nrpe bits. See: https://github.com/juju/ch
             A comma-separated list of nagios servicegroups.
             If left empty, the nagios_context will be used as the servicegroup
 
-3. Add custom checks (Nagios plugins) to files/nrpe-external-master
+3. Add custom checks (Nagios plugins) to files/nrpe-checks
 
-       files/nrpe-external-master/check_mycheck.sh
+       files/nrpe-checks/check_mycheck.sh
 
 4. Implement the events in charm.py with something like in this charm
 

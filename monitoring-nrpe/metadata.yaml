@@ -1,21 +1,15 @@
 # Copyright 2021 Erik Lönroth
 # See LICENSE file for licensing details.
 
-# For a complete list of supported options, see:
-# https://discourse.charmhub.io/t/charm-metadata-v2/3674/15
 name: monitoring-nrpe
 display-name: |
   The monitoring-nrpe charm
 description: |
   This charm demonstrates use of with nagios nrpe.
 summary: |
-  It provides a dummy monitor using nagios-external-nrpe interface.
+  It provides a dummy monitor using local-monitors interface.
 
 provides:
-  nrpe-external-master:
-    interface: nrpe-external-master
-    scope: container
-
   local-monitors:
-    interface: nrpe-external-master
+    interface: local-monitors
     scope: container

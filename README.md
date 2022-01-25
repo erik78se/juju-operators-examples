@@ -33,7 +33,7 @@ It loads some metrics on cpu and memory.
 
 #### [monitoring-nrpe](monitoring-nrpe)
 This charm demonstrates use nagios nrpe (and charmhelpers).
-It uses the the nagios-external-nrpe interface.
+It uses the the local-monitoris interface.
 
 #### [storage-filesystem](storage-filesystem)
 Uses a separate disk (type: filesystem) for storing log files. 

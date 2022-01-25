@@ -26,5 +26,5 @@ machines:
 relations:
 - - nagios:monitors
   - nrpe:monitors
-- - monitoring-nrpe:nrpe-external-master
-  - nrpe:nrpe-external-master
+- - monitoring-nrpe:local-monitors
+  - nrpe:local-monitors

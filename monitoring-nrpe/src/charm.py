@@ -1,40 +1,37 @@
 #!/usr/bin/env python3
 # Copyright 2021 Erik Lönroth
 # See LICENSE file for licensing details.
-#
-# Learn more at: https://juju.is/docs/sdk
 
-
-import logging
 import os
 from ops.charm import CharmBase
 from ops.main import main
 from ops.model import ActiveStatus
-
 from charmhelpers.contrib.charmsupport.nrpe import NRPE
 from charmhelpers.core import hookenv, host
 
-
-logger = logging.getLogger(__name__)
-
-EMOJI_CORE_HOOK_EVENT = "\U0001F4CC"
-
 NAGIOS_PLUGINS_DIR = "/usr/local/lib/nagios/plugins/"
 
-class NrpeCharm(CharmBase):
-    """A nrpe charm."""
+class MonitoringNrpeCharm(CharmBase):
+    """
+    A charm that deploys a monitoring script and allows to be
+    related to nrpe:local-monitors to be used with nagios.
+    
+    juju deploy nagios
+    juju deploy nrpe
+    juju deploy ./monitoring-nrpe_ubuntu-20.04-amd64.charm
+    juju relate nagios:monitors nrpe:monitors
+    juju relate monitoring-nrpe:local-monitors nrpe
+
+    """
     
     def __init__(self, *args):
         super().__init__(*args)
 
-        self.framework.observe(self.on.nrpe_external_master_relation_changed,
-                               self._on_nrpe_changed)
-
         self.framework.observe(self.on.local_monitors_relation_changed,
                                self._on_nrpe_changed)
-        
+
     def _on_nrpe_changed(self, event):
-        """Handle nrpe-external-master relation joined."""
+        """Handle nrpe relations changed."""
         
         # Get plugins in place.
         self.update_plugins()
@@ -60,7 +57,7 @@ class NrpeCharm(CharmBase):
 
     def update_plugins(self):
         """Rsync plugins to the plugin directory."""
-        checkscript = os.path.join(hookenv.charm_dir(), "files", "nrpe-external-master/check_hello.sh")
+        checkscript = os.path.join(hookenv.charm_dir(), "files", "nrpe-checks/check_hello.sh")
         host.rsync(checkscript, NAGIOS_PLUGINS_DIR, options=["--executability"])
 
     def render_checks(self):
@@ -69,7 +66,8 @@ class NrpeCharm(CharmBase):
         if not os.path.exists(self.plugins_dir):
             os.makedirs(self.plugins_dir)
 
-        # register basic test
+        # Register a basic test.
+        # Just add more with add_check before nrpe.write()
         
         nrpe.add_check(
             shortname="hellocheck",
@@ -80,4 +78,4 @@ class NrpeCharm(CharmBase):
         
     
 if __name__ == "__main__":
-    main(NrpeCharm)
+    main(MonitoringNrpeCharm)
