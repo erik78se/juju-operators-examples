@@ -9,9 +9,11 @@ import logging
 import os
 from ops.charm import CharmBase
 from ops.main import main
+from ops.model import ActiveStatus
 
 from charmhelpers.contrib.charmsupport.nrpe import NRPE
 from charmhelpers.core import hookenv, host
+
 
 logger = logging.getLogger(__name__)
 
@@ -25,10 +27,13 @@ class NrpeCharm(CharmBase):
     def __init__(self, *args):
         super().__init__(*args)
 
-        self.framework.observe(self.on.nrpe_external_master_relation_created,
-                               self._on_nrpe_external_master_relation_created)
+        self.framework.observe(self.on.nrpe_external_master_relation_changed,
+                               self._on_nrpe_changed)
 
-    def _on_nrpe_external_master_relation_created(self, event):
+        self.framework.observe(self.on.local_monitors_relation_changed,
+                               self._on_nrpe_changed)
+        
+    def _on_nrpe_changed(self, event):
         """Handle nrpe-external-master relation joined."""
         
         # Get plugins in place.
@@ -39,6 +44,9 @@ class NrpeCharm(CharmBase):
 
         # Restart nrpe
         self.restart_nrpe_service()
+
+        # Set active status
+        self.unit.status = ActiveStatus("Monitoring")
 
 
     @property

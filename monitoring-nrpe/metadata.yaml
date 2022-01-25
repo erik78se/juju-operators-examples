@@ -15,3 +15,7 @@ provides:
   nrpe-external-master:
     interface: nrpe-external-master
     scope: container
+
+  local-monitors:
+    interface: nrpe-external-master
+    scope: container
