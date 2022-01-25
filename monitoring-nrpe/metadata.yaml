@@ -1,0 +1,15 @@
+# Copyright 2021 Erik Lönroth
+# See LICENSE file for licensing details.
+
+name: monitoring-nrpe
+display-name: |
+  The monitoring-nrpe charm
+description: |
+  This charm demonstrates use of with nagios nrpe.
+summary: |
+  It provides a dummy monitor using local-monitors interface.
+
+provides:
+  local-monitors:
+    interface: local-monitors
+    scope: container
