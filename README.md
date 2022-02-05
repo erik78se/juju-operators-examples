@@ -39,6 +39,10 @@ It uses the the local-monitoris interface.
 Uses a separate disk (type: filesystem) for storing log files. 
 Useful for charms which needs to have permanent or re-usable data on separate disk.
 
+#### [haproxy-relate](haproxy-relate)
+Example on how to form a relation to haproxy, passing information on how to have haproxy
+be automatically configured.
+
 
 ## Contribute
 Please contribute by creating own examples, trying existing ones out, document, give feedback and support!

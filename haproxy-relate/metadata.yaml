@@ -1,0 +1,14 @@
+# Copyright 2021 Erik Lönroth
+# See LICENSE file for licensing details.
+
+name: haproxy-relate
+display-name: |
+  haproxy-relate
+description: |
+  This charm demonstrates how to relate to haproxy
+summary: |
+  It can be related to haproxy
+
+provides:
+  website:
+    interface: http

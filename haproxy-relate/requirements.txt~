@@ -1,0 +1,3 @@
+ops >= 1.3.0
+charmhelpers==0.20.24
+
