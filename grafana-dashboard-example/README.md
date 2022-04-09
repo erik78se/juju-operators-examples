@@ -11,12 +11,12 @@ Uses charmhelpers lib to work out the nrpe bits. See: https://github.com/juju/ch
     juju model-config logging-config="<root>=WARNING;unit=TRACE"
 
     juju deploy grafana
-    juju deploy ./grafana-dashboard-example.charm
+    juju deploy ./grafana-dashboard-example_ubuntu-20.04-amd64.charm
     juju relate grafana grafana-dashboard-example
 
-    # Visit nagios http://grafana:3000
+    # Visit grafana http://grafana:3000
     # Get admin password:
-    juju run-action grafana/0 get-admin-password --wait
+    juju run-action grafana/0 get-login-info --wait
 
 ## General implementation details
 1. Update metadata.yaml
@@ -24,13 +24,14 @@ Uses charmhelpers lib to work out the nrpe bits. See: https://github.com/juju/ch
        provides:
          hello-dashboard:
          interface: grafana-dashboard
-         scope: container
 
 3. Add custom dashboards to 
 
        files/grafana-dashboards/foobar.json
 
-4. Implement the code to send the dashboard:
+4. Implement the code to send the dashboard when the relation is joined.
+
+       charm.py
 
 5. Update charmcraft.yaml to pass along the files
 
@@ -43,7 +44,7 @@ Uses charmhelpers lib to work out the nrpe bits. See: https://github.com/juju/ch
 6. Add to requirements.txt
 
        ops >= 1.4.0
-       charmhelpers==0.20.24
+
 
 ## Authors
 Erik Lönroth, support me by attributing my work
