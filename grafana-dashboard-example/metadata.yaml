@@ -1,0 +1,15 @@
+# Copyright 2021 Erik Lönroth
+# See LICENSE file for licensing details.
+
+name: grafana-dashboard-example
+display-name: |
+  The grafana-dashboard-example charm
+description: |
+  This charm demonstrates how to send grafana dashboards to grafana
+  via the interface grafana-dashboard
+summary: |
+  It provides a hello-world dashboard.
+
+provides:
+  hello-dashboard:
+    interface: grafana-dashboard
