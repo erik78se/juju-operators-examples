@@ -2,6 +2,7 @@
 # Copyright 2021 Erik Lönroth
 # See LICENSE file for licensing details.
 
+import copy
 import os
 import logging
 import json
@@ -21,6 +22,8 @@ class GrafanaDashBoardCharm(CharmBase):
     juju deploy grafana-example-dashboard.charm
     juju relate grafana grafana-example-dashboard
 
+    Inspiration from: https://opendev.org/openstack/charm-ceph-dashboard/src/branch/master/src/interface_grafana_dashboard.py
+
     """
     
     def __init__(self, *args):
@@ -29,6 +32,9 @@ class GrafanaDashBoardCharm(CharmBase):
         self.framework.observe(self.on.hello_dashboard_relation_joined,
                                self._send_dashboard)
 
+        # self.framework.observe(self.on.hello_dashboard_relation_changed,
+        #                       self._send_dashboard)
+
     def _send_dashboard(self, event):
         """
         Loads json from file, converts it to string and places it on the relation.
@@ -36,19 +42,24 @@ class GrafanaDashBoardCharm(CharmBase):
         """
         dashboard_file = Path('files/grafana-dashboards/hello-world.json')
 
+        # Load up json
         f = open(dashboard_file)
-
-        data = json.load(f)
-
+        _dashboard = json.load(f)
         f.close()
 
-        logger.debug("Sending dashboard: " + json.dumps(data, indent=4))
+        # We add in a source_model key,value
+        _dashboard["source_model"] = self.model.name
 
-        event.relation.data[self.model.unit]['dashboard'] = json.dumps(data)
+        logger.debug("Sending dashboard: " + json.dumps(_dashboard, indent=4, sort_keys=True))
 
-        event.relation.data[self.model.unit]['name'] = self.model.name
+        # Set data on the event relation.
+        # event.relation.data[self.model.unit]['dashboard'] = json.loads(dashboard_file.read_text())
+        event.relation.data[self.model.unit]['dashboard'] = json.dumps(_dashboard)
+        event.relation.data[self.model.unit]['name'] = "myName1"
 
+        # Done
         self.unit.status = ActiveStatus("Dashboard sent.")
     
+
 if __name__ == "__main__":
     main(GrafanaDashBoardCharm)
