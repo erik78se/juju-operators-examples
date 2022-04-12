@@ -11,5 +11,8 @@ summary: |
   It provides a hello-world dashboard.
 
 provides:
-  hello-dashboard:
+  grafana-dashboard:
     interface: grafana-dashboard
+
+  scrape:
+    interface: prometheus
