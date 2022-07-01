@@ -1,4 +1,4 @@
-# deploy-minimal
+# deploy-with-storage
 Minimal charm implementing only the deploy hooks + storage_attach hook.
 
 ## Usage
