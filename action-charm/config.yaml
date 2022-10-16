@@ -1,0 +1,8 @@
+options:
+  log-level:
+    description: |
+      Configures the log level. 
+
+      Acceptable values are: "info", "debug", "warning", "error" and "critical"
+    default: "info"
+    type: string

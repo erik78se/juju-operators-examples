@@ -1,0 +1,7 @@
+
+hello:
+  description: Set a message for the action output.
+  params:
+    message:
+      type: string
+      description: Enter a message to put in the action output.

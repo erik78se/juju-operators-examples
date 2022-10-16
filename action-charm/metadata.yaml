@@ -1,0 +1,11 @@
+name: action-charm
+
+display-name: The Action Charm
+
+summary: Demonstrates a charm with an action that prints out a message.
+
+description: |
+  This charm is demonstrating the implementation of an action that prints out a message.
+
+  The main purpose is to show charm authors how to implement their own actions.
+

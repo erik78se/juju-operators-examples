@@ -45,5 +45,9 @@ This charm can form a relation to haproxy to automatically configure it as a rev
 #### [grafana-dashboard-example](grafana-dashboard-example)
 This charm shows how to pass a custom grafana dashboard to grafana to monitor some prometheus metrics. A bit more advanced, but rewarding if you like to go far with your automation of your services.
 
+#### [action-charm](action-charm)
+This charm implements a hello-world action.
+
+
 ## Contribute
 Please contribute by creating own examples, trying existing ones out, document, give feedback and support!
