@@ -98,6 +98,9 @@ The charm is ready to be deployed. Later on, you would be able to upload it to c
         Write tests
           - Example: Missing
 
-## Examples - more
+## What happens with a charm after deploy?
+This explains what happens to a charm once you deploy it and how you can implement advanced features for your charm, depending on your ambitions and needs for your charm and software. https://discourse.charmhub.io/t/a-charms-life/5938
+
+## Examples
 
 https://github.com/erik78se/juju-operators-example
