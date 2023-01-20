@@ -65,7 +65,7 @@ An empty directory with the name of our charm.
 
     root@juj:~# mkdir mycharm
     root@juj:~# cd mycharm
-    root@juj:~/mycharm# charmcraft init --machine # can be simple, machine or kubernetes
+    root@juj:~/mycharm# charmcraft init --profile machine # can be simple, machine or kubernetes
 
 ## Edit the metadata.yaml and add the name to the charm.
 
