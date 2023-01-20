@@ -21,7 +21,7 @@ First, make sure your iptables isn't going to mess up from docker fucking up you
     
 Launch up a VM with 15GB disk on a Ubuntu 22.04. You can use other virtual machine managers (multipass, libvirt etc.) but I use lxd.
 
-    lxc launch images:ubuntu/jammy juj -d root,size=15GiB
+    lxc launch ubuntu:jammy juj -d root,size=15GiB --vm
 
 Setup the machine for the tutorial
     
