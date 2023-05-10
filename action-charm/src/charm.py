@@ -33,7 +33,8 @@ class ActionCharmCharm(CharmBase):
         """
         try:
             #custom
-            event.set_results({"the-message": "Hello world"})
+            event.set_results({'the-message': event.params['message']})
+            event.set_results({'some-other-value': 'Other value'})
             
             #stdout
             event.log(event.params['message'])  
