@@ -1,0 +1,12 @@
+name: observed
+display-name: |
+  Observed
+description: |
+  A charm that allows a user to observe the microsample service with the COS stack.
+summary: |
+  An educational charm that can be observed with the COS stack.
+
+
+provides:
+  cos-agent:
+    interface: cos_agent

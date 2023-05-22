@@ -1,0 +1,13 @@
+options:
+  port:
+    type: string
+    default: "8080"
+    description: "Listen port (-p) passed to flask run."
+  channel:
+    type: string
+    default: "edge"
+    description: "Channel for microsample snap."
+  message:
+    type: string
+    default: "ERIK"
+    description: "A message in the motd"

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "JUJU was here {{name}}"
