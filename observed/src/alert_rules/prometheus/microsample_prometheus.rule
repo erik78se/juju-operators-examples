@@ -1,0 +1,12 @@
+groups:
+  - name: microsample_total_calls_exceeded
+    rules:
+      - alert: MicrosampleTotalCallsValueExceeded
+        expr: microsample_total_calls > 3
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Total API calls value exceeded threshold"
+          description: "The value of microsample_total_calls is currently {{ $value }} which exceeds the threshold of 3."
+
