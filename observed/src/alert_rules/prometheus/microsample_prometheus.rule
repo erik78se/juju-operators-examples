@@ -1,7 +1,7 @@
 groups:
   - name: microsample_calls_total_exceeded
     rules:
-      - alert: MicrosampleTotalCallsValueExceeded
+      - alert: MicrosampleCallsTotalValueExceeded
         expr: microsample_calls_total > 3
         for: 1m
         labels:
