@@ -25,7 +25,9 @@ class ObservedCharm(CharmBase):
         self._grafana_agent = COSAgentProvider(
             self, metrics_endpoints=[
                 {"path": "/metrics", "port": self.config.get('port')},
-            ]
+            ],
+            metrics_rules_dir="./src/alert_rules/prometheus",
+            logs_rules_dir="./src/alert_rules/loki"
         )
         self.framework.observe(self.on.config_changed, self._on_config_changed)
         self.framework.observe(self.on.install, self._on_what_we_do_in_install)
