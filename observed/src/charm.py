@@ -22,6 +22,10 @@ class ObservedCharm(CharmBase):
 
     def __init__(self, *args):
         super().__init__(*args)
+        
+        # Define the data to send to grafana-agent
+        # More on how to customize logs/alerts/dashboards
+        # here https://discourse.charmhub.io/t/juju-topology-labels/8874
         self._grafana_agent = COSAgentProvider(
             self, metrics_endpoints=[
                 {"path": "/metrics", "port": self.config.get('port')},
@@ -30,11 +34,11 @@ class ObservedCharm(CharmBase):
             logs_rules_dir="./src/alert_rules/loki"
         )
         self.framework.observe(self.on.config_changed, self._on_config_changed)
-        self.framework.observe(self.on.install, self._on_what_we_do_in_install)
+        self.framework.observe(self.on.install, self._on_install)
         self.framework.observe(self.on.upgrade_charm, self._on_upgrade_charm)
 
 
-    def _on_what_we_do_in_install(self, theevent):
+    def _on_install(self, theevent):
         
         logger.debug(EMOJI_CORE_HOOK_EVENT + sys._getframe().f_code.co_name)
 
@@ -62,17 +66,6 @@ class ObservedCharm(CharmBase):
         os.system(f"snap set microsample port={port}")
 
         os.system("systemctl restart snap.microsample.microsample")
-
-        # Render a custom motd.
-
-        message = self.config.get('message')
-
-        template = jinja2.Environment(loader=jinja2.FileSystemLoader('templates')).get_template('11-jujuwashere')
-        target = Path('/etc/update-motd.d/11-jujwashere')
-        ctx = { 'name': message }
-        target.write_text(template.render(ctx))
-        st = os.stat(target)
-        os.chmod(target, st.st_mode | stat.S_IEXEC)
 
     def _on_upgrade_charm(self, theevent):
 
