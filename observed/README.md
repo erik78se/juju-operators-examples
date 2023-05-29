@@ -67,6 +67,10 @@ Now, relate with the COS offers you have in your model
 
 Juju will now take care of sending dashboards, alert-rules & loki rules to COS and you can access them in COS grafana dashboard.
 
+![The deployed model](deployed-and-related.png)
+
+![The dashboard](grafana-dashboard-view.png)
+
 ## Customize dashboards etc.
 
 Read here: https://discourse.charmhub.io/t/juju-topology-labels/8874
