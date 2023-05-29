@@ -48,6 +48,8 @@ This charm shows how to pass a custom grafana dashboard to grafana to monitor so
 #### [action-charm](action-charm)
 This charm implements a hello-world action.
 
+#### [observed](observed)
+This charm shows how to integrate with the [grafana-agent](https://charmhub.io/grafana-agent) subordinate-charm and how to add advanced observability/monitoring to your own charms.
 
 ## Contribute
 Please contribute by creating own examples, trying existing ones out, document, give feedback and support!
