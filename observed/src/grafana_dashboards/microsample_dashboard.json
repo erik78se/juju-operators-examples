@@ -114,7 +114,7 @@
           },
           "editorMode": "builder",
           "exemplar": false,
-          "expr": "microsample_calls_total",
+          "expr": "microsample_calls_total{juju_application=\"$juju_application\", juju_unit=\"$juju_unit\"} or on(juju_unit) microsample_calls_total{juju_unit=~\"$juju_unit\"}",
           "instant": false,
           "key": "Q-ff5f30a8-fc96-4ceb-949c-13c1e14e992f-0",
           "legendFormat": "__auto",
@@ -154,7 +154,7 @@
             "uid": "PF442A318F6AE1CA5"
           },
           "editorMode": "code",
-          "expr": "{juju_application=\"observed\"} |~ \".* 404 .*\"",
+          "expr": "{juju_application=\"$juju_application\", juju_unit=~\"$juju_unit\"} |~ \".* 404 .*\"",
           "key": "Q-ea47a4f5-6d79-4763-bf3b-a5aaf339a382-0",
           "queryType": "range",
           "refId": "A"
