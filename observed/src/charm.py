@@ -16,6 +16,8 @@ class ObservedCharm(CharmBase):
         
         # Define data to send to grafana-agent and 
         # provide paths to dashboards + alert-rules.
+        # The COSAgentProvider is added to the source tree from
+        #     charmcraft fetch-lib charms.grafana_agent.v0.cos_agent
         self._grafana_agent = COSAgentProvider(
             self, metrics_endpoints=[
                 {"path": "/metrics", "port": self.config.get('port')},
