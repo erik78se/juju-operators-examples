@@ -49,7 +49,7 @@ This charm shows how to pass a custom grafana dashboard over a integration to mo
 This charm implements a hello-world action.
 
 #### [observed](observed)
-This charm shows how to integrate with the [grafana-agent](https://charmhub.io/grafana-agent) subordinate-charm and how to add advanced observability/monitoring to your own charms and the [Canonical Observability Stack (COS)](https://charmhub.io/cos-lite).
+This charm shows how to integrate with the [grafana-agent](https://charmhub.io/grafana-agent) subordinate-charm and how to add advanced observability/monitoring to your own charms and integrate with the [Canonical Observability Stack (COS)](https://charmhub.io/cos-lite).
 
 ## Contribute
 Please contribute by creating own examples, trying existing ones out, document, give feedback and support!
