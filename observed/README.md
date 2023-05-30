@@ -37,28 +37,25 @@ Juju will now take care of sending dashboards, alert-rules & loki rules to COS a
 
 ![The dashboard](grafana-dashboard-view.png)
 
-## Customize dashboards etc.
+## Dashboard with juju topoligy.
 
-The shiped dashboard uses some variables from the juju topolgy injected by the grafana-agent library.
+When Juju ships the supplied [dashboard](src/grafana_dashboards/microsample_dashboard.json), variables from the juju topolgy are injected by the grafana-agent library such that they can be used directly in the dashboard json.
 
 For example in the loki query:
+
     ```"expr": "{juju_application=\"$juju_application\", juju_unit=~\"$juju_unit\"} |~ \".* 404 .*\""```
 
-Read here for how to extend this to your own charms: https://discourse.charmhub.io/t/juju-topology-labels/8874
+Read about [Juju topology](https://discourse.charmhub.io/t/juju-topology-labels/8874) for how to extend this to your own charms.
 
 ## Alert rules examples
 
-The charm ships a prometheus alert rule that is triggered once you have called the microsample API more than 3 times:
+The charm ships a [prometheus alert rule](src/alert_rules/prometheus/microsample_prometheus.rule) that is triggered once you have called the microsample API more than 3 times like below:
 
     curl http://microsample.ip:8080/api/info
 
 The charm shipps a Loki alert rule, that is triggered if API is called incorrecty which causes Loki to see a 404 code in the logs) 
 
     curl http://microsample.ip:8080/api/XXX
-
-## Relations/Integrations
-
-Relate/integrate this with grafana-agent
 
 ### Development process
 
@@ -99,7 +96,3 @@ The general steps are:
                 metrics_rules_dir="./src/alert_rules/prometheus",
                 logs_rules_dir="./src/alert_rules/loki"
     ```
-
-## Contributing
-
-Place a PR
