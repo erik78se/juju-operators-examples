@@ -8,7 +8,7 @@ It ships a dashboard, a prometheus alart rule and a loki alert rule.
 
 ## Usage
 
-Deploy the [Canonical Observability Stack (COS)](https://charmhub.io/cos-lite) and offer the three needed integrations.
+Deploy the [Canonical Observability Stack (COS)](https://charmhub.io/cos-lite) and offer the three needed integrations. This guide does not cover setting up COS lite but leaves that up to the reader.
 
 ![Alt text](overview.png)
 
