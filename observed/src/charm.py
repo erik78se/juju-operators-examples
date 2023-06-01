@@ -18,6 +18,9 @@ class ObservedCharm(CharmBase):
         # provide paths to dashboards + alert-rules.
         # The COSAgentProvider is added to the source tree from
         #     charmcraft fetch-lib charms.grafana_agent.v0.cos_agent
+        # Changes to the rules/dashboards will be updated automatically if the charm
+        # is updated.
+        
         self._grafana_agent = COSAgentProvider(
             self, metrics_endpoints=[
                 {"path": "/metrics", "port": self.config.get('port')},

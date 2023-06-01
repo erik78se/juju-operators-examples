@@ -4,7 +4,7 @@
 
 This charm demonstrates how to integrate with [Canonical Observability Stack (COS)](https://charmhub.io/cos-lite).
 
-It ships a dashboard, a prometheus alart rule and a loki alert rule.
+It ships a dashboard, a prometheus alert rule and a loki alert rule.
 
 ## Usage
 
