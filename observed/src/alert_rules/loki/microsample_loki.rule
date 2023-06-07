@@ -1,0 +1,11 @@
+groups:
+  - name: Microsample_API_error_404
+    rules:
+      - alert: MicrosampleInvalidAPIcalls
+        expr: count_over_time({filename="/var/log/syslog", juju_charm=~".*"} |= `microsample` |= `404` [1m]) > 4
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Over 4 invalid API calls has occured"
+          descriptions: "Over 4 invalid API call has occured to microsample with error code 404"
