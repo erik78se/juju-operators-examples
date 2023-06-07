@@ -40,14 +40,16 @@ This charm demonstrates use nagios nrpe (and charmhelpers) for monitoring a serv
 It uses the the local-monitors interface.
 
 #### [haproxy-relate](haproxy-relate)
-This charm can form a relation to haproxy to automatically configure it as a reverse proxy. Very useful for deploying custom web-services.
+This charm can form an relation/integration to haproxy to automatically configure it as a reverse proxy. Very useful for deploying custom web-services.
 
 #### [grafana-dashboard-example](grafana-dashboard-example)
-This charm shows how to pass a custom grafana dashboard to grafana to monitor some prometheus metrics. A bit more advanced, but rewarding if you like to go far with your automation of your services.
+This charm shows how to pass a custom grafana dashboard over a integration to monitor prometheus metrics. If you look to monitor your application with a full [Canonical Observability Stack (COS)](https://charmhub.io/cos-lite), you should study the much more mature [observed](observed).
 
 #### [action-charm](action-charm)
 This charm implements a hello-world action.
 
+#### [observed](observed)
+This charm shows how to integrate with the [grafana-agent](https://charmhub.io/grafana-agent) subordinate-charm and how to add advanced observability/monitoring to your own charms and integrate with the [Canonical Observability Stack (COS)](https://charmhub.io/cos-lite).
 
 ## Contribute
 Please contribute by creating own examples, trying existing ones out, document, give feedback and support!

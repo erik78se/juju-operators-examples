@@ -1,35 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_JUJU_COSK8S_708B1B2C-27D1-4A68-8E75-19CD1F343445_PROMETHEUS_0",
-      "label": "juju_cosk8s_708b1b2c-27d1-4a68-8e75-19cd1f343445_prometheus_0",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "9.2.1"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -52,18 +21,20 @@
       }
     ]
   },
+  "description": "Grafana Dashboard for the observed charm",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
+  "id": 21,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_JUJU_COSK8S_708B1B2C-27D1-4A68-8E75-19CD1F343445_PROMETHEUS_0}"
+        "uid": "PDB17D70C1516178C"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -117,8 +88,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 9,
+        "w": 17,
         "x": 0,
         "y": 0
       },
@@ -139,11 +110,12 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_JUJU_COSK8S_708B1B2C-27D1-4A68-8E75-19CD1F343445_PROMETHEUS_0}"
+            "uid": "PDB17D70C1516178C"
           },
           "editorMode": "builder",
-          "expr": "microsample_calls_total",
-          "instant": true,
+          "exemplar": false,
+          "expr": "microsample_calls_total{juju_application=\"$juju_application\", juju_unit=\"$juju_unit\"} or on(juju_unit) microsample_calls_total{juju_unit=~\"$juju_unit\"}",
+          "instant": false,
           "key": "Q-ff5f30a8-fc96-4ceb-949c-13c1e14e992f-0",
           "legendFormat": "__auto",
           "range": true,
@@ -152,11 +124,52 @@
       ],
       "title": "Total Calls to Microsample API",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "PF442A318F6AE1CA5"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 17,
+        "x": 0,
+        "y": 9
+      },
+      "id": 2,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": false,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "PF442A318F6AE1CA5"
+          },
+          "editorMode": "code",
+          "expr": "{juju_application=\"$juju_application\", juju_unit=~\"$juju_unit\"} |~ \".* 404 .*\"",
+          "key": "Q-ea47a4f5-6d79-4763-bf3b-a5aaf339a382-0",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Loki logs contaning the word: \"404\" ",
+      "type": "logs"
     }
   ],
   "schemaVersion": 37,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "education",
+    "juju"
+  ],
   "templating": {
     "list": []
   },
@@ -166,8 +179,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Microsample dashboard",
+  "title": "Microsample Dashboard",
   "uid": "5TjamSQVz",
-  "version": 1,
+  "version": 8,
   "weekStart": ""
 }
