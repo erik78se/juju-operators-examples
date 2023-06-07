@@ -2,7 +2,7 @@ groups:
   - name: microsample_calls_total_exceeded
     rules:
       - alert: MicrosampleCallsTotalValueExceeded
-        expr: microsample_calls_total > 3
+        expr: microsample_calls_total{juju_charm=~".*"} > 3 
         for: 1m
         labels:
           severity: critical
@@ -10,3 +10,11 @@ groups:
           summary: "Total API calls value exceeded threshold"
           description: "The value of microsample_calls_total is currently {{ $value }} which exceeds the threshold of 3."
 
+      - alert: MicrosampleCallsTotalRateExceeded
+        expr: rate(microsample_calls_total{juju_charm=~".*"}[2m]) > 0.5
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Total API calls rate exceeded threshold"
+          description: "The rate value of microsample_calls_total is currently {{ $value }} which above 0.5 limit."

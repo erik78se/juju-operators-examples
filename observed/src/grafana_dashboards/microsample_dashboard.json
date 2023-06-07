@@ -1,4 +1,67 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_JUJU_COS_E53F2CBE-9661-431C-840C-2FE58367D7D1_PROMETHEUS_0",
+      "label": "juju_cos_e53f2cbe-9661-431c-840c-2fe58367d7d1_prometheus_0",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    },
+    {
+      "name": "DS_JUJU_COS_E53F2CBE-9661-431C-840C-2FE58367D7D1_LOKI_0",
+      "label": "juju_cos_e53f2cbe-9661-431c-840c-2fe58367d7d1_loki_0",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "loki",
+      "pluginName": "Loki"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "9.2.1"
+    },
+    {
+      "type": "panel",
+      "id": "logs",
+      "name": "Logs",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "loki",
+      "name": "Loki",
+      "version": "1.0.0"
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -21,20 +84,18 @@
       }
     ]
   },
-  "description": "Grafana Dashboard for the observed charm",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 21,
+  "id": null,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDB17D70C1516178C"
+        "uid": "${DS_JUJU_COS_E53F2CBE-9661-431C-840C-2FE58367D7D1_PROMETHEUS_0}"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -88,12 +149,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
-        "w": 17,
+        "h": 12,
+        "w": 18,
         "x": 0,
         "y": 0
       },
-      "id": 1,
+      "id": 2,
       "options": {
         "legend": {
           "calcs": [],
@@ -110,33 +171,250 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDB17D70C1516178C"
+            "uid": "${DS_JUJU_COS_E53F2CBE-9661-431C-840C-2FE58367D7D1_PROMETHEUS_0}"
           },
           "editorMode": "builder",
-          "exemplar": false,
-          "expr": "microsample_calls_total{juju_application=\"$juju_application\", juju_unit=\"$juju_unit\"} or on(juju_unit) microsample_calls_total{juju_unit=~\"$juju_unit\"}",
-          "instant": false,
-          "key": "Q-ff5f30a8-fc96-4ceb-949c-13c1e14e992f-0",
+          "expr": "microsample_calls_total",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Total Calls to Microsample API",
+      "title": "Total Microsample calls",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_JUJU_COS_E53F2CBE-9661-431C-840C-2FE58367D7D1_PROMETHEUS_0}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "semi-dark-purple",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "9.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_JUJU_COS_E53F2CBE-9661-431C-840C-2FE58367D7D1_PROMETHEUS_0}"
+          },
+          "editorMode": "builder",
+          "expr": "microsample_calls_created",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Microsample Calls Created",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_JUJU_COS_E53F2CBE-9661-431C-840C-2FE58367D7D1_PROMETHEUS_0}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 12
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_JUJU_COS_E53F2CBE-9661-431C-840C-2FE58367D7D1_PROMETHEUS_0}"
+          },
+          "editorMode": "builder",
+          "expr": "rate(microsample_calls_total[2m])",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total avg Calls per second",
       "type": "timeseries"
     },
     {
       "datasource": {
         "type": "loki",
-        "uid": "PF442A318F6AE1CA5"
+        "uid": "${DS_JUJU_COS_E53F2CBE-9661-431C-840C-2FE58367D7D1_LOKI_0}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 20
+      },
+      "id": 6,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "9.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${DS_JUJU_COS_E53F2CBE-9661-431C-840C-2FE58367D7D1_LOKI_0}"
+          },
+          "editorMode": "builder",
+          "expr": "{juju_unit=\"observed/0\", filename=\"/var/log/syslog\"} |= ``",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Syslog",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "${DS_JUJU_COS_E53F2CBE-9661-431C-840C-2FE58367D7D1_LOKI_0}"
       },
       "gridPos": {
         "h": 7,
-        "w": 17,
+        "w": 24,
         "x": 0,
-        "y": 9
+        "y": 29
       },
-      "id": 2,
+      "id": 8,
       "options": {
         "dedupStrategy": "none",
         "enableLogDetails": true,
@@ -151,36 +429,32 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "PF442A318F6AE1CA5"
+            "uid": "${DS_JUJU_COS_E53F2CBE-9661-431C-840C-2FE58367D7D1_LOKI_0}"
           },
-          "editorMode": "code",
-          "expr": "{juju_application=\"$juju_application\", juju_unit=~\"$juju_unit\"} |~ \".* 404 .*\"",
-          "key": "Q-ea47a4f5-6d79-4763-bf3b-a5aaf339a382-0",
+          "editorMode": "builder",
+          "expr": "{juju_unit=\"observed/0\"} |= `404`",
           "queryType": "range",
           "refId": "A"
         }
       ],
-      "title": "Loki logs contaning the word: \"404\" ",
+      "title": "Invalid API calls \"404\"",
       "type": "logs"
     }
   ],
   "schemaVersion": 37,
   "style": "dark",
-  "tags": [
-    "education",
-    "juju"
-  ],
+  "tags": [],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Microsample Dashboard",
-  "uid": "5TjamSQVz",
-  "version": 8,
+  "title": "MicroSample",
+  "uid": "2-9xdR_4z",
+  "version": 2,
   "weekStart": ""
 }
