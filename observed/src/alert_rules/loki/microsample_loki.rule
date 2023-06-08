@@ -1,11 +1,11 @@
 groups:
-  - name: Microsample_API_error_404
+  - name: loki_rule_ms
     rules:
-      - alert: MicrosampleInvalidAPIcalls
-        expr: count_over_time({filename="/var/log/syslog", juju_charm=~".*"} |= `microsample` |= `404` [1m]) > 4
-        for: 1m
+      - alert: MicrosampleGET_Metrics
+        expr: count_over_time({juju_application="observed", juju_charm=~".*"} |= `GET` |= `/metrics` [1m]) > 0.5
+        for: 3m
         labels:
-          severity: critical
+          severity: page
         annotations:
-          summary: "Over 4 invalid API calls has occured"
-          descriptions: "Over 4 invalid API call has occured to microsample with error code 404"
+          summary: Test loki rule for Microsample
+
