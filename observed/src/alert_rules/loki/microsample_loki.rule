@@ -1,11 +1,11 @@
 groups:
-  - name: loki_rule_ms
+  - name: Microsample_loki_rules
     rules:
-      - alert: MicrosampleGET_Metrics
-        expr: count_over_time({juju_application="observed", juju_charm=~".*"} |= `GET` |= `/metrics` [1m]) > 0.5
-        for: 3m
+      - alert: MicrosampleReturnsInvalid404Calls
+        expr: count_over_time({filename="/var/log/syslog", juju_charm=~".*", juju_application="observed"} |= `microsample` |= `404` [1m]) > 0
+        for: 1m
         labels:
-          severity: page
+          severity: warning
         annotations:
-          summary: Test loki rule for Microsample
-
+          summary: If microsample returns any 404 invalid api calls for more than 1m, trigger alert.
+          description: This Microsample rule alerts if 1 or more api returns 404 in the last minute. 
