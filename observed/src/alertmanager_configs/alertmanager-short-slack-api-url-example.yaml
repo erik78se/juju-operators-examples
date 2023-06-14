@@ -1,0 +1,26 @@
+##  Alertmanager Slack using api-url example
+##  Information about configuring alertmanager: 
+##  https://github.com/prometheus/alertmanager/blob/main/docs/configuration.md
+global:
+  resolve_timeout: 1m
+  slack_api_url: '<incomming-webhook-api-url>' # Example https://hooks.slack.com/services/AA11BB22CC3/3DD44EE55FF/AA11bb22Cc33dd44EE55
+
+route:
+  receiver: 'slack-notifications' # Default receiver
+  group_by: ['alertname', 'severity', 'service']
+  group_wait: 0s
+  group_interval: 1m
+  repeat_interval: 1m
+  routes:
+  - match:
+      severity: 'error|warning|critical' # Match several or one 'critical'
+    receiver: 'slack-notifications' # Point to configured receiver
+
+receivers:
+- name: 'slack-notifications'
+  slack_configs:
+  - channel: '#alert-channel' # Channel name or username (@user)
+    send_resolved: true
+    http_config:
+      tls_config:
+        insecure_skip_verify: true
