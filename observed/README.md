@@ -57,6 +57,20 @@ The charm shipps a Loki alert rule, that is triggered if API is called incorrect
 
     curl http://microsample.ip:8080/api/XXX
 
+## Alertmanager examples
+
+There is 4 different examples of [alertmanager configurations](src/alertmanager_configs/) that shows how to intergrate pagerduty and slack with alertmanager.
+If other providers or configuration is needed, more information can be found at [prometheus documentation](https://prometheus.io/docs/alerting/latest/configuration/) site.
+
+Inject configuration file with juju using following command:
+
+    juju config alertmanager config_file="$(cat /path/to/configuration.yaml)"
+
+To show or check current configuration:
+
+    juju run-action alertmanager/0 show-config
+    juju run-action alertmanager/0 check-config
+
 ### Development process
 
 This charm is developed following this guide: https://charmhub.io/topics/canonical-observability-stack/tutorials/instrumenting-machine-charms

@@ -1,0 +1,28 @@
+##  Alertmanager Slack using api-token example
+##  Information about configuring alertmanager: 
+##  https://github.com/prometheus/alertmanager/blob/main/docs/configuration.md
+global:
+  resolve_timeout: 1m
+
+route:
+  receiver: 'slack-notifications' # Default receiver
+  group_by: ['alertname', 'severity']
+  group_wait: 0s
+  group_interval: 1m
+  repeat_interval: 1m
+  routes:
+  - match:
+      severity: 'error|warning|critical' # Match several or one 'critical'
+    receiver: 'slack-notifications' # Point to configured receiver
+
+receivers:
+- name: 'slack-notifications'
+  slack_configs:
+  - channel: '#alert-channel'
+    send_resolved: true
+    http_config:
+      tls_config:
+        insecure_skip_verify: true
+      authorization:
+        credentials: '<slack-api-token (e.g. xoxb-aa11bb22cc3-3dd44ee55ff-aa11bb22cc33dd44ee55>' # <-- Change this to your token
+    api_url: https://slack.com/api/chat.postMessage

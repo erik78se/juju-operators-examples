@@ -1,0 +1,23 @@
+##  Alertmanager PagerDuty Example
+##  Information about configuring alertmanager: 
+##  https://github.com/prometheus/alertmanager/blob/main/docs/configuration.md
+##  https://www.pagerduty.com/docs/guides/prometheus-integration-guide/
+global:
+  resolve_timeout: 1m
+  pagerduty_url: https://events.pagerduty.com/v2/enqueue
+
+route:
+  receiver: 'pagerduty'
+  group_by: ['alertname', 'severity', 'service']
+  group_wait: 0s
+  group_interval: 1m
+  repeat_interval: 1m
+
+receivers:
+- name: 'pagerduty'
+  pagerduty_configs:
+  - service_key: '<service-key>'
+    send_resolved: true
+    http_config:
+      tls_config:
+        insecure_skip_verify: true
