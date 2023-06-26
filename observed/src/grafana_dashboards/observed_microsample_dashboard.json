@@ -24,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 27,
+  "id": 28,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -112,7 +112,7 @@
             "uid": "${prometheusds}"
           },
           "editorMode": "builder",
-          "expr": "microsample_calls_total{juju_model=\"$juju_model\", juju_model_uuid=\"$juju_model_uuid\", juju_application=\"observed\", juju_unit=\"$juju_unit\"}",
+          "expr": "microsample_calls_total{juju_application=\"observed\",juju_model=~\"$juju_model\",juju_model_uuid=~\"$juju_model_uuid\",juju_unit=~\"$juju_unit\"}",
           "legendFormat": "{{juju_application}}",
           "range": true,
           "refId": "A"
@@ -178,7 +178,7 @@
             "uid": "${prometheusds}"
           },
           "editorMode": "builder",
-          "expr": "microsample_calls_total{juju_model=\"$juju_model\", juju_model_uuid=\"$juju_model_uuid\", juju_application=\"observed\", juju_unit=\"$juju_unit\"}",
+          "expr": "microsample_calls_total{juju_application=\"observed\",juju_model=~\"$juju_model\",juju_model_uuid=~\"$juju_model_uuid\",juju_unit=~\"$juju_unit\"}",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -243,8 +243,8 @@
             "type": "prometheus",
             "uid": "${prometheusds}"
           },
-          "editorMode": "builder",
-          "expr": "rate(microsample_calls_total{juju_model=\"$juju_model\", juju_model_uuid=\"$juju_model_uuid\", juju_application=\"observed\", juju_unit=\"$juju_unit\"}[1m])",
+          "editorMode": "code",
+          "expr": "rate(microsample_calls_total{juju_application=\"observed\",juju_model=~\"$juju_model\",juju_model_uuid=~\"$juju_model_uuid\",juju_unit=~\"$juju_unit\"}[2m])/2",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -283,7 +283,7 @@
             "uid": "${lokids}"
           },
           "editorMode": "builder",
-          "expr": "{juju_model=\"$juju_model\", juju_model_uuid=\"$juju_model_uuid\", juju_application=\"observed\"} |= `microsample` |= `404`",
+          "expr": "{juju_model=~\"$juju_model\", juju_model_uuid=~\"$juju_model_uuid\", juju_application=\"observed\", juju_unit=~\"$juju_unit\"} |= \"microsample\" |= \"404\"",
           "queryType": "range",
           "refId": "A"
         }
@@ -293,187 +293,35 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "${prometheusds}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
+        "type": "datasource",
+        "uid": "grafana"
       },
       "gridPos": {
-        "h": 6,
+        "h": 12,
         "w": 7,
         "x": 17,
         "y": 10
       },
-      "id": 8,
+      "id": 14,
       "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
+        "alertInstanceLabelFilter": "",
+        "alertName": "Microsample",
+        "dashboardAlerts": false,
+        "groupBy": [],
+        "groupMode": "default",
+        "maxItems": 20,
+        "sortOrder": 1,
+        "stateFilter": {
+          "error": true,
+          "firing": true,
+          "noData": false,
+          "normal": false,
+          "pending": true
         },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
+        "viewMode": "list"
       },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prometheusds}"
-          },
-          "editorMode": "builder",
-          "expr": "increase(microsample_calls_total{juju_model=\"$juju_model\", juju_model_uuid=\"$juju_model_uuid\", juju_application=\"observed\", juju_unit=\"$juju_unit\"}[2m]) / 2",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Total call per minute",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${prometheusds}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 7,
-        "x": 17,
-        "y": 16
-      },
-      "id": 7,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prometheusds}"
-          },
-          "editorMode": "builder",
-          "expr": "increase(microsample_calls_total{juju_model=\"$juju_model\", juju_model_uuid=\"$juju_model_uuid\", juju_application=\"observed\", juju_unit=\"$juju_unit\"}[2m]) / 2 / 60",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Total call per second",
-      "type": "timeseries"
+      "title": "Alert list ",
+      "type": "alertlist"
     },
     {
       "datasource": {
@@ -504,7 +352,7 @@
             "uid": "${lokids}"
           },
           "editorMode": "builder",
-          "expr": "{filename=\"/var/log/syslog\", juju_model=\"$juju_model\", juju_model_uuid=\"$juju_model_uuid\", juju_application=\"observed\", juju_unit=\"observed/0\"} |= ``",
+          "expr": "{filename=\"/var/log/syslog\", juju_model=~\"$juju_model\", juju_model_uuid=~\"$juju_model_uuid\", juju_application=\"observed\", juju_unit=\"observed/0\"} |= \"\"",
           "queryType": "range",
           "refId": "A"
         }
@@ -687,6 +535,6 @@
   "timezone": "",
   "title": "Observed Microsample",
   "uid": "yjttGqu4z",
-  "version": 3,
+  "version": 1,
   "weekStart": ""
 }
