@@ -64,7 +64,7 @@ If other providers or configuration is needed, more information can be found at 
 
 Inject configuration file with juju using following command:
 
-    juju config alertmanager config_file="$(cat /path/to/configuration.yaml)"
+    juju config alertmanager config_file=@/path/to/file
 
 To show or check current configuration:
 
