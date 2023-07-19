@@ -8,5 +8,5 @@ tags:
   - education
 
 peers:
-  peering:
+  cluster:
     interface: my_config

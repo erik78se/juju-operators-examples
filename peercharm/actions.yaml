@@ -1,7 +1,0 @@
-update-config:
-  description: 'Update the config'
-  params:
-    config:
-      decription: 'The config'
-      type: string
-  required: [ config ]
