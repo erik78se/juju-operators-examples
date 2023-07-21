@@ -32,6 +32,7 @@ class PeerCharm(CharmBase):
         super().__init__(*args)
         self.state.set_default(configfile="")
         self.framework.observe(self.on.config_changed, self._on_config_changed)
+        self.framework.observe(self.on.leader_elected, self._on_config_changed)
         self.framework.observe(self.on.cluster_relation_joined, self._on_cluster_relation_handler)
         self.framework.observe(self.on.cluster_relation_changed, self._on_cluster_relation_handler)
         self.framework.observe(self.on.cluster_relation_departed, self._on_cluster_relation_handler)
