@@ -40,22 +40,36 @@ class PeerCharm(CharmBase):
         """
         Handle events affecting the relation.
         The events we care about for a peer relation are: 
-          RelationJoinedEvent   -> When a unit joins.
-          RelationChangedEvent  -> When data is changed on the relation.
-          RelationDepartedEvent -> When a unit leves a relation.
+          RelationChangedEvent  -> When data is changed on the relation, non-leaders.
+          RelationJoinedEvent   -> When a unit joins, leader sends new config.
+          RelationDepartedEvent -> When a unit leves a relation, leader sends new config.
         """
         
-        # Leader writes config and sends it to peers
-        if not self.model.unit.is_leader():
+        if not self.model.unit.is_leader() and isinstance(event, RelationChangedEvent):
+            logger.info("Non leader got new config from cluster relation.")
+            config = self.model.get_relation("cluster").data[self.app]["config.php"]
+            logger.info("Non leader writing new config from relation:" + config)
+            self.write_config_file(config)
+            self.unit.status = ops.ActiveStatus(f"Loglevel: {self.model.config['log-level']}")
             return
-    
-        log_level = self.model.config["log-level"].lower()
-        self.write_config_file(log_level)
-        # self.model.get_relation("cluster").data[self.app]["config.php"] = self.read_config_file()
-        # self.on.config_changed.emit()
-  
+        
+        if self.model.unit.is_leader() and ( isinstance(event, RelationJoinedEvent) or isinstance(event, RelationDepartedEvent) ):
+            logger.info("Leader generates new config since we have new or departing units.")
+            self.write_config_file(self.assemble_config())
+            logger.info("Leader sends new config on the relation (relation-joined/departed).")
+            self.model.get_relation("cluster").data[self.app]["config.php"] = self.read_config_file()
+            self.unit.status = ops.ActiveStatus(f"Loglevel: {self.model.config['log-level']}")
+ 
+        if self.model.unit.is_leader():
+            logger.warning("Leader not sure to handle this event for a :" + str(event))
+        else:
+            logger.warning("Non-leader not sure to handle this event for a :" + str(event))
+
     def _on_config_changed(self, event: ops.ConfigChangedEvent):
         """Handle changed configuration."""
+        if not self.model.unit.is_leader():
+            # Non leaders don do anything.
+            return
 
         # Fetch config        
         log_level = self.model.config["log-level"].lower()
@@ -67,39 +81,54 @@ class PeerCharm(CharmBase):
         else:
             self.unit.status = ops.WaitingStatus(f"Incorrect log-level, no config written: {log_level}")
         
-        if self.model.unit.is_leader():
-            self.model.get_relation("cluster").data[self.app]["config.php"] = self.read_config_file()
-        else:
-            self.write_config_file(log_level)
+        # Write config
+        logger.info("Leader generates new config (since we have changed config.)")
+        self.write_config_file(self.assemble_config())
+        logger.info("Leader sends new config on the relation (config-changed).")
+        self.model.get_relation("cluster").data[self.app]["config.php"] = self.read_config_file()
 
     
     def _remove_unit_from_peers(self, unit):
         """
         Is it the responsibility of the charmer to implement the removal of peers?
         """
-        relation = self.model.get_relation("peering")
+        relation = self.model.get_relation("cluster")
         if relation and unit in relation.units:
-            self.unit.status = MaintenanceStatus("Removing unit from peers relation")
+            self.unit.status = MaintenanceStatus("Removing unit from cluster peer-relation")
             relation.units.remove(unit)
             self._update_peers_relation_data()
 
     def on_peers_relation_departed(self, event: RelationDepartedEvent):
         self._remove_unit_from_peers(event.unit)
 
-    def write_config_file(self, log_level):
-        """Write our config file."""
-        with open(CONFIG_FILE, "w") as file:            
-            try:
-                unit_ips = self.model.get_relation("cluster").data[self.app]["unit-ips"]
-            except KeyError:
-                # Doesn't yet exist
-                unit_ips = ""
-            file.write(
-                f"log-level={log_level}\n"
-                f"leader={self.unit.name}\n"
-                f"unit-ips={unit_ips}"
-                f"\n"
+
+    def assemble_config(self):
+        """ Assembles config."""
+        log_level = self.model.config["log-level"].lower()
+        unit_ips = []
+        if self.model.unit.is_leader():
+            leader = self.model.unit
+        try:
+            relation = self.model.get_relation("cluster")
+            for unit_or_app in relation.data:
+                if unit_or_app.name != self.app.name:
+                    unit_ips.append(relation.data[unit_or_app]["private-address"])
+        except KeyError:
+            # Doesn't yet exist
+            unit_ips = ""
+        
+        content = str(
+            f"log-level={log_level}\n"
+            f"leader={leader.name}\n"
+            f"unit-ips={unit_ips}"
+            f"\n"
             )
+        return content
+
+    def write_config_file(self, content):
+        """Write config to file."""
+        with open(CONFIG_FILE, "w") as file:            
+            file.write(content)
 
     def read_config_file(self):
         """ Read config file, return content as a String"""
