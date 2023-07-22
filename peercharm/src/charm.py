@@ -20,57 +20,64 @@ from ops.framework import (
                         )
 import ops
 
-logger = logging.getLogger(__name__)
-
 VALID_LOG_LEVELS = ["info", "debug", "warning", "error", "critical"]
 CONFIG_FILE = "/tmp/config.php"
+
+logger = logging.getLogger(__name__)
 
 class PeerCharm(CharmBase):
     state = StoredState()
 
     def __init__(self, *args):
         super().__init__(*args)
-        self.state.set_default(configfile="")
+        self.state.set_default(config="")
         self.framework.observe(self.on.config_changed, self._on_config_changed)
         self.framework.observe(self.on.leader_elected, self._on_config_changed)
         self.framework.observe(self.on.cluster_relation_joined, self._on_cluster_relation_handler)
         self.framework.observe(self.on.cluster_relation_changed, self._on_cluster_relation_handler)
         self.framework.observe(self.on.cluster_relation_departed, self._on_cluster_relation_handler)
-        
+
     def _on_cluster_relation_handler(self, event):
         """
         Handle events affecting the relation.
         The events we care about for a peer relation are: 
-          RelationChangedEvent  -> When data is changed on the relation, non-leaders.
-          RelationJoinedEvent   -> When a unit joins, leader sends new config.
-          RelationDepartedEvent -> When a unit leves a relation, leader sends new config.
+          RelationChangedEvent  -> When data is changed on the relation.
+          RelationJoinedEvent   -> When a unit joins.
+          RelationDepartedEvent -> When a unit leves a relation.
         """
         
         if not self.model.unit.is_leader() and isinstance(event, RelationChangedEvent):
-            logger.info("Non leader got new config from cluster relation.")
+            logger.info("MINION got new config from cluster relation.")
             config = self.model.get_relation("cluster").data[self.app]["config.php"]
-            logger.info("Non leader writing new config from relation:" + config)
+            logger.info(f"MINION writing new config from relation: \n{config}\n")
             self.write_config_file(config)
             self.unit.status = ops.ActiveStatus(f"Loglevel: {self.model.config['log-level']}")
             return
         
         if self.model.unit.is_leader() and ( isinstance(event, RelationJoinedEvent) or isinstance(event, RelationDepartedEvent) ):
-            logger.info("Leader generates new config since we have new or departing units.")
+            logger.info("LEADER generates new config since we have new or departing units.")
             self.write_config_file(self.assemble_config())
-            logger.info("Leader sends new config on the relation (relation-joined/departed).")
+            logger.info("LEADER sends new config on the relation (relation-joined/departed).")
             self.model.get_relation("cluster").data[self.app]["config.php"] = self.read_config_file()
             self.unit.status = ops.ActiveStatus(f"Loglevel: {self.model.config['log-level']}")
+            return
  
-        if self.model.unit.is_leader():
-            logger.warning("Leader not sure to handle this event for a :" + str(event))
-        else:
-            logger.warning("Non-leader not sure to handle this event for a :" + str(event))
+        if self.model.unit.is_leader() and isinstance(event, RelationChangedEvent):
+            logger.info("LEADER ignores changes to relation.")
+            return
+        
+        logger.warning("No action taken for event:" + str(event))
+        
 
     def _on_config_changed(self, event: ops.ConfigChangedEvent):
         """Handle changed configuration."""
         if not self.model.unit.is_leader():
             # Non leaders don do anything.
+            logger.info("MINION not acting on config-changed.")
             return
+
+        # Look for previous config.
+        current_config = self.state.config
 
         # Fetch config        
         log_level = self.model.config["log-level"].lower()
@@ -83,10 +90,16 @@ class PeerCharm(CharmBase):
             self.unit.status = ops.WaitingStatus(f"Incorrect log-level, no config written: {log_level}")
         
         # Write config
-        logger.info("Leader generates new config (since we have changed config.)")
-        self.write_config_file(self.assemble_config())
-        logger.info("Leader sends new config on the relation (config-changed).")
-        self.model.get_relation("cluster").data[self.app]["config.php"] = self.read_config_file()
+        logger.info("LEADER generates new config.")
+        c = self.assemble_config()
+        if current_config != c:
+            logger.warning(f"New config differ from stored as \nNew:\n{c}\nOld:\n{current_config}\n")
+            self.write_config_file(c)
+            self.state.config = c
+            logger.info("LEADER sends new config on the relation (config-changed).")
+            self.model.get_relation("cluster").data[self.app]["config.php"] = self.read_config_file()
+        else:
+            logger.info("Config is same, no update needed.")
 
     
     def _remove_unit_from_peers(self, unit):
