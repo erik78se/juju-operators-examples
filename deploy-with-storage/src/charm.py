@@ -5,13 +5,12 @@
 # Learn more at: https://juju.is/docs/sdk
 
 import logging
-from ops.charm import CharmBase
-from ops.main import main
-from ops.model import MaintenanceStatus, ActiveStatus
+
+import ops
 
 logger = logging.getLogger(__name__)
 
-class DeployMinimalStorageCharm(CharmBase):
+class DeployMinimalStorageCharm(ops.CharmBase):
     """
     A charm which implements the deployment hooks including the storage hooks.
 
@@ -32,29 +31,29 @@ class DeployMinimalStorageCharm(CharmBase):
             storage with the name [foobar] defined in metadata.yaml
         """
         logger.info("Step 1/4: STORAGE_ATTACHED")
-        self.unit.status = MaintenanceStatus("Step: 1/4")
+        self.unit.status = ops.MaintenanceStatus("Step: 1/4")
 
     def _on_install(self, event):
         """
             install is the first core hook to fire when deploying.
         """
         logger.info("Step 2/4: INSTALL")
-        self.unit.status = MaintenanceStatus("Step: 2/4")
+        self.unit.status = ops.MaintenanceStatus("Step: 2/4")
 
     def _on_config_changed(self, event):
         """
             config_changed is second core hook to fire when deploying.
         """
         logger.info("Step 3/4: CONFIG_CHANGED")
-        self.unit.status = MaintenanceStatus("Step: 3/4")
+        self.unit.status = ops.MaintenanceStatus("Step: 3/4")
 
     def _on_start(self, event):
         """
             start is the last core hook to fire when deploying.
         """
         logger.info("Step 4/4: START")
-        self.unit.status = ActiveStatus("Step: 4/4")
+        self.unit.status = ops.ActiveStatus("Step: 4/4")
 
 
 if __name__ == "__main__":
-    main(DeployMinimalStorageCharm)
+    ops.main(DeployMinimalStorageCharm)

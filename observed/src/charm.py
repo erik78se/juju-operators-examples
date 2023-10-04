@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 
-from charms.grafana_agent.v0.cos_agent import COSAgentProvider
-from ops.charm import CharmBase
-from ops.main import main
-from ops.model import ActiveStatus, MaintenanceStatus
 import os
 import subprocess as sp
 
+import ops
+from charms.grafana_agent.v0.cos_agent import COSAgentProvider
+
 EMOJI_GREEN_DOT = "\U0001F7E2"
 
-class ObservedCharm(CharmBase):
+class ObservedCharm(ops.CharmBase):
 
     def __init__(self, *args):
         super().__init__(*args)
@@ -38,9 +37,9 @@ class ObservedCharm(CharmBase):
     def _on_install(self, theevent):
         # Install from configured channel
         channel = self.config.get('channel')
-        self.unit.status = MaintenanceStatus("Installing microsample snap")
+        self.unit.status = ops.MaintenanceStatus("Installing microsample snap")
         os.system(f"snap install microsample --{channel}")
-        self.unit.status = ActiveStatus(EMOJI_GREEN_DOT + " Ready")
+        self.unit.status = ops.ActiveStatus(EMOJI_GREEN_DOT + " Ready")
 
 
     def _on_config_changed(self, theevent):
@@ -66,8 +65,8 @@ class ObservedCharm(CharmBase):
         self.unit.set_workload_version("1.0")
         
         # Set active status.
-        self.unit.status = ActiveStatus(EMOJI_GREEN_DOT + " Ready")
+        self.unit.status = ops.ActiveStatus(EMOJI_GREEN_DOT + " Ready")
 
 
 if __name__ == "__main__":
-    main(ObservedCharm)
+    ops.main(ObservedCharm)

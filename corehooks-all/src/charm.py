@@ -21,13 +21,9 @@
 import logging
 import os
 import shutil
-
-from ops.charm import CharmBase
-from ops.framework import StoredState
-from ops.main import main
-from ops.model import ActiveStatus, WaitingStatus, MaintenanceStatus
-import subprocess as sp
 import sys
+
+import ops
 
 logger = logging.getLogger(__name__)
 
@@ -38,10 +34,10 @@ EMOJI_RED_DOT = "\U0001F534"
 EMOJI_PACKAGE = "\U0001F4E6"
 
 
-class CorehooksAllCharm(CharmBase):
+class CorehooksAllCharm(ops.CharmBase):
     """Charm the hello service with all core hooks."""
 
-    _stored = StoredState()
+    _stored = ops.StoredState()
 
     def __init__(self, *args):
         super().__init__(*args)
@@ -136,10 +132,10 @@ class CorehooksAllCharm(CharmBase):
 
         if not os.system('systemctl is-active hello.service') == 0:
             logger.info("hello service is not running.")
-            self.unit.status = MaintenanceStatus("Inactive.")
+            self.unit.status = ops.MaintenanceStatus("Inactive.")
         else:
             logger.info(f"hello service is running.")
-            self.unit.status = ActiveStatus("Running.")
+            self.unit.status = ops.ActiveStatus("Running.")
 
     def _on_upgrade_charm(self, event):
         logger.debug(EMOJI_CORE_HOOK_EVENT + sys._getframe().f_code.co_name)
@@ -192,4 +188,4 @@ class CorehooksAllCharm(CharmBase):
             os.system('systemctl restart hello.service')
 
 if __name__ == "__main__":
-    main(CorehooksAllCharm)
+    ops.main(CorehooksAllCharm)

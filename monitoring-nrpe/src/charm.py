@@ -3,15 +3,14 @@
 # See LICENSE file for licensing details.
 
 import os
-from ops.charm import CharmBase
-from ops.main import main
-from ops.model import ActiveStatus
+
+import ops
 from charmhelpers.contrib.charmsupport.nrpe import NRPE
 from charmhelpers.core import hookenv, host
 
 NAGIOS_PLUGINS_DIR = "/usr/local/lib/nagios/plugins/"
 
-class MonitoringNrpeCharm(CharmBase):
+class MonitoringNrpeCharm(ops.CharmBase):
     """
     A charm that deploys a monitoring script and allows to be
     related to nrpe:local-monitors to be used with nagios.
@@ -43,7 +42,7 @@ class MonitoringNrpeCharm(CharmBase):
         self.restart_nrpe_service()
 
         # Set active status
-        self.unit.status = ActiveStatus("Monitoring")
+        self.unit.status = ops.ActiveStatus("Monitoring")
 
 
     @property
@@ -78,4 +77,4 @@ class MonitoringNrpeCharm(CharmBase):
         
     
 if __name__ == "__main__":
-    main(MonitoringNrpeCharm)
+    ops.main(MonitoringNrpeCharm)
