@@ -12,10 +12,8 @@ import logging
 import os
 import shutil
 import functools
-from ops.charm import CharmBase
-from ops.main import main
-from ops.model import ActiveStatus
-import sys
+
+import ops
 
 logger = logging.getLogger(__name__)
 
@@ -40,7 +38,7 @@ def logdecorate(prefix):
     return decorate
 
 
-class StorageFilesystemCharm(CharmBase):
+class StorageFilesystemCharm(ops.CharmBase):
 
     def __init__(self, *args):
         super().__init__(*args)
@@ -94,8 +92,8 @@ class StorageFilesystemCharm(CharmBase):
         """
         os.system('systemctl disable var-log-mylogs.mount --now')
         os.remove('/etc/systemd/system/var-log-mylogs.mount')
-        self.unit.status = ActiveStatus(f"{EMOJI_CROSS_MARK_BUTTON} Detached storage.")
+        self.unit.status = ops.ActiveStatus(f"{EMOJI_CROSS_MARK_BUTTON} Detached storage.")
 
         
 if __name__ == "__main__":
-    main(StorageFilesystemCharm)
+    ops.main(StorageFilesystemCharm)

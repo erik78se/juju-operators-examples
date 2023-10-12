@@ -5,15 +5,14 @@
 import os
 import logging
 import socket
-from ops.charm import CharmBase
-from ops.main import main
-from ops.model import ActiveStatus, MaintenanceStatus
+
+import ops
 import yaml
 from jinja2 import Environment
 
 logger = logging.getLogger(__name__)
 
-class HaproyRelate(CharmBase):
+class HaproyRelate(ops.CharmBase):
     """
     Relate to haproxy, using service directive as:
 
@@ -44,7 +43,7 @@ class HaproyRelate(CharmBase):
     def _on_install(self,event):
         """ Install """
         
-        self.unit.status = MaintenanceStatus("installing microsample snap")
+        self.unit.status = ops.MaintenanceStatus("installing microsample snap")
         os.system('snap install microsample --edge')
 
         
@@ -56,7 +55,7 @@ class HaproyRelate(CharmBase):
         event.relation.data[self.model.unit]['services'] = self._render_services()
 
         # Set active status
-        self.unit.status = ActiveStatus("Ready, relation data sent.")
+        self.unit.status = ops.ActiveStatus("Ready, relation data sent.")
 
     def _render_services(self):
         """
@@ -95,4 +94,4 @@ class HaproyRelate(CharmBase):
 
         
 if __name__ == "__main__":
-    main(HaproyRelate)
+    ops.main(HaproyRelate)

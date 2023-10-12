@@ -7,22 +7,16 @@
 
 import logging
 
-from ops.charm import CharmBase
-from ops.framework import StoredState
-from ops.main import main
-from ops.model import ActiveStatus
-import subprocess as sp
-import sys
-import subprocess
+import ops
 import psutil
 
 logger = logging.getLogger(__name__)
 
 EMOJI_CORE_HOOK_EVENT = "\U0001F4CC"
 
-class MetricsBaseCharm(CharmBase):
+class MetricsBaseCharm(ops.CharmBase):
 
-    _stored = StoredState()
+    _stored = ops.StoredState()
 
     def __init__(self, *args):
         super().__init__(*args)
@@ -54,4 +48,4 @@ class MetricsBaseCharm(CharmBase):
         event.add_metrics({"mem_used": mem_used, "load_5": load_5})
 
 if __name__ == "__main__":
-    main(MetricsBaseCharm)
+    ops.main(MetricsBaseCharm)

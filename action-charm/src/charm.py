@@ -13,14 +13,12 @@ The Action Charm
 from cmath import e
 import logging
 
-from ops.charm import CharmBase
-from ops.main import main
-from ops.model import ActiveStatus, BlockedStatus, WaitingStatus
+import ops
 
 # Log messages can be retrieved using juju debug-log
 logger = logging.getLogger(__name__)
 
-class ActionCharmCharm(CharmBase):
+class ActionCharmCharm(ops.CharmBase):
     """Charm the service."""
 
     def __init__(self, *args):
@@ -43,4 +41,4 @@ class ActionCharmCharm(CharmBase):
             event.fail(message=e)
 
 if __name__ == "__main__":  # pragma: nocover
-    main(ActionCharmCharm)
+    ops.main(ActionCharmCharm)

@@ -2,22 +2,18 @@
 # Copyright 2021 Erik Lönroth
 # See LICENSE file for licensing details.
 
-import copy
 import os
 import logging
 import json
 import time
-from pathlib import Path
 import socket
-from typing import List
-from ops.charm import CharmBase, RelationChangedEvent, RelationDepartedEvent
-from ops.main import main
-from ops.model import ActiveStatus
+
+import ops
 
 
 logger = logging.getLogger(__name__)
 
-class GrafanaDashBoardCharm(CharmBase):
+class GrafanaDashBoardCharm(ops.CharmBase):
     """
     A charm that deploys a grafana dashboard to grafana.
     
@@ -44,7 +40,7 @@ class GrafanaDashBoardCharm(CharmBase):
         self.framework.observe(self.on.scrape_relation_changed, 
                                 self._on_scrape_relation_changed)
         
-    def _install(self,event):
+    def _install(self, event):
         """
         Install prometheus-node-exporter so to provide some metrics.
         """
@@ -53,7 +49,7 @@ class GrafanaDashBoardCharm(CharmBase):
         
 
 
-    def _on_grafana_dashboard_relation_changed(self, event: RelationChangedEvent) -> None:
+    def _on_grafana_dashboard_relation_changed(self, event: ops.RelationChangedEvent) -> None:
         """Provide the dashboard to Grafana."""
         # Only one dashboard is needed so let the app leader deal with it
         if not self.unit.is_leader():
@@ -146,7 +142,7 @@ class GrafanaDashBoardCharm(CharmBase):
         )
         logger.debug("Dashboard sent to Grafana")
 
-    def _on_scrape_relation_changed(self, event: RelationChangedEvent) -> None:
+    def _on_scrape_relation_changed(self, event: ops.RelationChangedEvent) -> None:
         """
         Provide basic node exporter metrics
         """
@@ -161,4 +157,4 @@ class GrafanaDashBoardCharm(CharmBase):
 
 
 if __name__ == "__main__":
-    main(GrafanaDashBoardCharm)
+    ops.main(GrafanaDashBoardCharm)

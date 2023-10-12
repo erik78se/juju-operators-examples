@@ -5,13 +5,12 @@
 # Learn more at: https://juju.is/docs/sdk
 
 import logging
-from ops.charm import CharmBase
-from ops.main import main
-from ops.model import MaintenanceStatus, ActiveStatus
+
+import ops
 
 logger = logging.getLogger(__name__)
 
-class LxdProfileCharm(CharmBase):
+class LxdProfileCharm(ops.CharmBase):
     """
         This charm demonstrate use of lxd-profile.yaml
         Note that you need to change the charm file for this to take effect.
@@ -27,8 +26,8 @@ class LxdProfileCharm(CharmBase):
             The lxd-profile.yaml gets updated as part of a upgrade-charm event.
         """
         logger.info("LXD profile is updated!")
-        self.unit.status = ActiveStatus("LXD profile was updated.")
+        self.unit.status = ops.ActiveStatus("LXD profile was updated.")
 
 
 if __name__ == "__main__":
-    main(LxdProfileCharm)
+    ops.main(LxdProfileCharm)
