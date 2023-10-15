@@ -1,0 +1,5 @@
+options:
+  log-level:
+    default: info
+    description: Loglevel can be info, warning or debug
+    type: string

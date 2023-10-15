@@ -1,0 +1,12 @@
+name: peercharm
+summary: A Juju charm with a peer relation that distributes a config.php file across its peers.
+maintainer: Erik Lonroth <erik.lonroth@gmail.com>
+description: |
+  This charm implements a peer relation that distributes a `config.php` file on the relation interface.
+tags:
+  - juju
+  - education
+
+peers:
+  cluster:
+    interface: my_config
