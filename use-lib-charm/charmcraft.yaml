@@ -1,0 +1,14 @@
+name: use-lib-charm
+type: charm
+title: Use Lib Charm
+summary: A charm that uses a juju library to control a systemd service.
+description: |
+  This charm used charmcraft fetch-lib charms.operator_libs_linux.v2.systemd to fetch a library and uses it in the charm
+
+bases:
+  - build-on:
+    - name: ubuntu
+      channel: "22.04"
+    run-on:
+    - name: ubuntu
+      channel: "22.04"
